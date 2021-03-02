@@ -11,7 +11,7 @@ import logger from 'redux-logger';
 
 import './index.css';
 import reducers from './reducers';
-import App from './App';
+import App from './components/App';
 
 // const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
