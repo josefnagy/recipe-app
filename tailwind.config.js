@@ -3,8 +3,8 @@ module.exports = {
     theme: {
         extend: {
             fontFamily: {
-                body: ['Lato', 'sans-serif'],
-                heading: ['Newsreader', 'serif'],
+                body: ['Open Sans Condensed', 'sans-serif'],
+                heading: ['Josefin Sans', 'sans-serif'],
             },
             colors: {
                 primary: '#279037',

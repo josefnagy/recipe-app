@@ -5,7 +5,7 @@ import Recipes from './Recipes';
 
 const App: React.FC = () => {
     return (
-        <div className="flex h-screen font-body">
+        <div className="flex h-screen font-heading">
             <Aside />
             <Recipes />
             <RecipeDetail />

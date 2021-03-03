@@ -26,7 +26,7 @@ const renderRecipes = recipes.map((recipe) => (
 ));
 
 const RecipeList: React.FC = () => {
-    return <div className="font-heading font-light py-3 ">{renderRecipes}</div>;
+    return <div className="font-heading font-light py-3 w-64">{renderRecipes}</div>;
 };
 
 export default RecipeList;
