@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { Link } from 'react-router-dom';
+
 const recipes: string[] = [
     'Ovesné rizoto s hráškem',
     'Podzimní salát s růžičkovou kapustou',
@@ -19,9 +21,9 @@ const recipes: string[] = [
     'Kuřecí satay s quinoa salátem',
 ];
 
-const renderRecipes = recipes.map((recipe) => (
+const renderRecipes = recipes.map((recipe, index) => (
     <p className="py-1 px-3 hover:bg-tertiary cursor-pointer hover:text-secondary" key={recipe}>
-        {recipe}
+        <Link to={`/recipe/${index}`}>{recipe}</Link>
     </p>
 ));
 

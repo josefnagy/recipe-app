@@ -1,11 +1,11 @@
 import React from 'react';
 
-const RecipeDetail: React.FC = () => {
+const RecipeInfo: React.FC = () => {
     const renderRecipe = () => {
         return (
             <>
                 <div className="flex items-end justify-center flex-col h-full">
-                    <h2 className="text-7xl font-heading ">Těstoviny s krémovou paprikovou omáčkou</h2>
+                    <h2 className="text-7xl font-heading">Těstoviny s krémovou paprikovou omáčkou</h2>
                     <p className="w-1/2  mt-14 border-l-4 pl-3 border-primary font-light">
                         To jsem si tak jednou zase dělala polívku z pečenejch račat a paprik a v tom mě to napadlo. To
                         by byla přece úplně skvělá omáčka na těstoviny! Samozřejmě jsem ten recept trošku ještě upravila
@@ -102,4 +102,4 @@ const RecipeDetail: React.FC = () => {
     return <div className="flex-auto bg-tertiary p-20 flex flex-col">{renderRecipe()}</div>;
 };
 
-export default RecipeDetail;
+export default RecipeInfo;
