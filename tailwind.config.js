@@ -11,6 +11,9 @@ module.exports = {
                 secondary: '#040F0F',
                 tertiary: '#E5E5E5',
             },
+            margin: {
+                84: '21rem',
+            },
         },
     },
     variants: {

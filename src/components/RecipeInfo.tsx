@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-scroll';
 
 import { Recipe } from '../store/recipes/types';
 import { AppState } from '../store';
@@ -21,7 +22,7 @@ const RecipeInfo: React.FC<RecipeInfoProps> = ({ match }) => {
         dispatch(viewRecipe(match.params.id));
     }, [dispatch, match.params.id]);
 
-    const renderRecipe = () => {
+    const renderRecipeInfo = () => {
         if (recipe) {
             return (
                 <>
@@ -103,7 +104,7 @@ const RecipeInfo: React.FC<RecipeInfoProps> = ({ match }) => {
                             </div>
                         </div>
                         <div className="self-end w-1/3 flex justify-center">
-                            <Link to={`/recipe/detail/${recipe.id}`}>
+                            <Link to="recipeDetail" smooth={true} duration={1000}>
                                 <svg width="38" height="45" viewBox="0 0 38 45" fill="none">
                                     <path
                                         d="M17.2322 43.7678C18.2085 44.7441 19.7915 44.7441 20.7678 43.7678L36.6777 27.8579C37.654 26.8816 37.654 25.2986 36.6777 24.3223C35.7014 23.346 34.1184 23.346 33.1421 24.3223L19 38.4645L4.85787 24.3223C3.88155 23.346 2.29864 23.346 1.32233 24.3223C0.346021 25.2986 0.346021 26.8816 1.32233 27.8579L17.2322 43.7678ZM16.5 1.09278e-07L16.5 42L21.5 42L21.5 -1.09278e-07L16.5 1.09278e-07Z"
@@ -126,10 +127,10 @@ const RecipeInfo: React.FC<RecipeInfoProps> = ({ match }) => {
     };
 
     return (
-        <div className="flex-auto bg-tertiary flex flex-col">
-            <section className="flex flex-col p-20 h-screen">{renderRecipe()}</section>
-            <section className="flex flex-col p-20 h-screen">
-                <p className="h-screen grid place-items-center">test</p>
+        <div className="bg-tertiary ml-84 ">
+            <section className="flex flex-col p-20 h-screen">{renderRecipeInfo()}</section>
+            <section className="flex flex-col p-20 h-screen bg-tertiary" id="recipeDetail">
+                <p className="h-full grid place-items-center">test</p>
             </section>
         </div>
     );

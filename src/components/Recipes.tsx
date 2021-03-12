@@ -5,7 +5,7 @@ import RecipeList from './RecipeList';
 
 const Recipes: React.FC = () => {
     return (
-        <div className="w-64 bg-secondary text-tertiary">
+        <div className="bg-secondary text-tertiary fixed h-screen ml-20">
             <RecipeFilter />
             <RecipeList />
         </div>
