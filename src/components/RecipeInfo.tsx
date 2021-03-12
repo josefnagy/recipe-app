@@ -126,8 +126,11 @@ const RecipeInfo: React.FC<RecipeInfoProps> = ({ match }) => {
     };
 
     return (
-        <div className="flex-auto bg-tertiary p-20 flex flex-col">
-            {typeof recipe !== 'undefined' ? renderRecipe() : ''}
+        <div className="flex-auto bg-tertiary flex flex-col">
+            <section className="flex flex-col p-20 h-screen">{renderRecipe()}</section>
+            <section className="flex flex-col p-20 h-screen">
+                <p className="h-screen grid place-items-center">test</p>
+            </section>
         </div>
     );
 };
