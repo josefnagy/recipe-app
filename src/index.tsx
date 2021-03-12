@@ -10,7 +10,7 @@ import reduxThunk from 'redux-thunk';
 import logger from 'redux-logger';
 
 import './index.css';
-import reducers from './reducers';
+import reducers from './store';
 import App from './components/App';
 
 // const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -22,7 +22,11 @@ const persistConfig = {
 
 const persistedReducer = persistReducer(persistConfig, reducers);
 
-const store = createStore(persistedReducer, composeWithDevTools(applyMiddleware(reduxThunk, logger)));
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const store = createStore<any, any, unknown, unknown>(
+    persistedReducer,
+    composeWithDevTools(applyMiddleware(reduxThunk, logger)),
+);
 
 const persistor = persistStore(store);
 

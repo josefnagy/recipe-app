@@ -82,5 +82,11 @@
 
     }
 ]
-
 ```
+
+### Actions:
+
+    +   VIEW_RECIPE
+    +   ADD_RECIPE
+    +   REMOVE_RECIPE
+    +   DELETE_RECIPE
