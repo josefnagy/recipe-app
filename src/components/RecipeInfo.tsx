@@ -18,6 +18,8 @@ const RecipeInfo: React.FC<RecipeInfoProps> = ({ match }) => {
     const dispatch = useDispatch();
     const recipe: Recipe | null = useSelector((state: AppState) => state.recipes.selectedRecipe);
 
+    console.log(recipe);
+
     useEffect(() => {
         dispatch(viewRecipe(match.params.id));
     }, [dispatch, match.params.id]);
@@ -126,11 +128,56 @@ const RecipeInfo: React.FC<RecipeInfoProps> = ({ match }) => {
         }
     };
 
+    const renderRecipeDetails = () => {
+        if (recipe) {
+            return (
+                <>
+                    <h2>{recipe.name}</h2>
+                    <h3>Ingredience:</h3>
+                    <div className="flex">
+                        {recipe.allIngredients.map((ingGroup, index) => (
+                            <div key={index}>
+                                <h4>{ingGroup.name}</h4>
+                                <table>
+                                    <tbody>
+                                        {ingGroup.ingredients.map((ingredient, index) => (
+                                            <tr key={index}>
+                                                <td>{ingredient.amount}</td>
+                                                <td>{ingredient.unit}</td>
+                                                <td>{ingredient.name}</td>
+                                                <td>{ingredient.note}</td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+                        ))}
+                    </div>
+                    <h3>Postup:</h3>
+                    <div>
+                        {recipe.battlePlan.map((step, index) => (
+                            <div key={index}>
+                                <span>{index + 1}. </span>
+                                {step}
+                            </div>
+                        ))}
+                    </div>
+                    <h3>Dojmy:</h3>
+                    <p>{recipe.notes}</p>
+                    <a href={recipe.url} target="_blank" rel="noreferrer">
+                        Odkaz na zdroj
+                    </a>
+                </>
+            );
+        }
+    };
+
     return (
         <div className="bg-tertiary ml-84 ">
             <section className="flex flex-col p-20 h-screen">{renderRecipeInfo()}</section>
             <section className="flex flex-col p-20 h-screen bg-tertiary" id="recipeDetail">
-                <p className="h-full grid place-items-center">test</p>
+                {/* <p className="h-full grid place-items-center">test</p> */}
+                {renderRecipeDetails()}
             </section>
         </div>
     );

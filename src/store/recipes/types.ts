@@ -35,15 +35,15 @@ export interface Recipe {
 }
 
 export interface IngredientGroup {
-    ingGroupName: string;
+    name: string;
     ingredients: Ingredient[];
 }
 
 export interface Ingredient {
-    ingName: string;
+    name: string;
     amount: number;
     unit: string;
-    ingNote: string;
+    note: string;
 }
 
 export interface RecipesState {
