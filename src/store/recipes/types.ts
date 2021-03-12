@@ -1,5 +1,6 @@
 export const PERSIST = 'persist/REHYDRATE';
 
+export const FETCH_RECIPES = 'FETCH_RECIPES';
 export const VIEW_RECIPE = 'VIEW_RECIPE';
 
 interface PersistStoreAction {
@@ -9,7 +10,12 @@ interface PersistStoreAction {
 
 interface ViewRecipeAction {
     type: typeof VIEW_RECIPE;
-    payload: Recipe;
+    payload: Recipe['id'];
+}
+
+interface FetchRecipeAction {
+    type: typeof FETCH_RECIPES;
+    payload: Recipe[];
 }
 
 export interface Recipe {
@@ -41,7 +47,8 @@ export interface Ingredient {
 }
 
 export interface RecipesState {
-    recipes: Recipe[];
+    allRecipes: Recipe[];
+    selectedRecipe: Recipe | null;
 }
 
-export type RecipeActionTypes = PersistStoreAction | ViewRecipeAction;
+export type RecipeActionTypes = PersistStoreAction | ViewRecipeAction | FetchRecipeAction;
