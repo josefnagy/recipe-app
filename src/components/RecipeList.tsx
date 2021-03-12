@@ -16,9 +16,13 @@ const RecipeList: React.FC = () => {
     }, [dispatch]);
 
     const renderRecipes = recipes.map((recipe: Recipe, index) => (
-        <p className="py-1 px-3 hover:bg-tertiary cursor-pointer hover:text-secondary" key={index}>
-            <Link to={`/recipe/${recipe.id}`}>{recipe.name}</Link>
-        </p>
+        <Link
+            className="py-1 px-3 block hover:bg-tertiary cursor-pointer hover:text-secondary"
+            key={index}
+            to={`/recipe/info/${recipe.id}`}
+        >
+            {recipe.name}
+        </Link>
     ));
 
     return <div className="font-heading font-light py-3 w-64">{renderRecipes}</div>;

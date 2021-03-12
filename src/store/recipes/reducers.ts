@@ -25,7 +25,6 @@ export const recipesReducer = (state = INITIAL_STATE, action: RecipeActionTypes)
 
         case VIEW_RECIPE:
             const recipesWithKeys = _.mapKeys(state.allRecipes, 'id');
-            console.log(recipesWithKeys);
             return {
                 ...state,
                 selectedRecipe: recipesWithKeys[action.payload],

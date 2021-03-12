@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Recipe } from '../store/recipes/types';
 import { AppState } from '../store';
 import { viewRecipe } from '../store/recipes/actions';
-
 interface RecipeInfoProps {
     match: {
         params: {
@@ -17,25 +17,17 @@ const RecipeInfo: React.FC<RecipeInfoProps> = ({ match }) => {
     const dispatch = useDispatch();
     const recipe: Recipe | null = useSelector((state: AppState) => state.recipes.selectedRecipe);
 
-    console.log(recipe);
-
     useEffect(() => {
         dispatch(viewRecipe(match.params.id));
-    }, [dispatch]);
+    }, [dispatch, match.params.id]);
 
     const renderRecipe = () => {
         if (recipe) {
             return (
                 <>
                     <div className="flex items-end justify-center flex-col h-full">
-                        <h2 className="text-7xl font-heading">{recipe.name}</h2>
-                        <p className="w-1/2  mt-14 border-l-4 pl-3 border-primary font-light">
-                            To jsem si tak jednou zase dělala polívku z pečenejch račat a paprik a v tom mě to napadlo.
-                            To by byla přece úplně skvělá omáčka na těstoviny! Samozřejmě jsem ten recept trošku ještě
-                            upravila a doladila, ale základ je vlastně úplně stejnej, jako na tu polívku. Pak k pečený
-                            zelenině akorát do mixéru místo vývaru přihodíte ricottu a vznikne vám božská a delikátní
-                            omáčka.
-                        </p>
+                        <h2 className="text-7xl font-heading self-start">{recipe.name}</h2>
+                        <p className="w-1/2  mt-14 border-l-4 pl-3 border-primary font-light">{recipe.description}</p>
                     </div>
                     <div className="flex justify-between">
                         <div className="w-1/3">
@@ -64,7 +56,7 @@ const RecipeInfo: React.FC<RecipeInfoProps> = ({ match }) => {
                                         />
                                     </svg>
                                 </div>
-                                <div className="ml-2">4 porce</div>
+                                <div className="ml-2">{recipe.portions} porce</div>
                             </div>
                             <div className="flex items-center">
                                 <div>
@@ -84,7 +76,7 @@ const RecipeInfo: React.FC<RecipeInfoProps> = ({ match }) => {
                                         />
                                     </svg>
                                 </div>
-                                <div className="ml-2">EASY</div>
+                                <div className="ml-2">{recipe.difficulty}</div>
                             </div>
                             <div className="flex items-center">
                                 <div>
@@ -105,25 +97,28 @@ const RecipeInfo: React.FC<RecipeInfoProps> = ({ match }) => {
                                     </svg>
                                 </div>
                                 <div className="ml-2">
-                                    <span>Cooking Time: </span>30 min
+                                    <span>Cooking Time: </span>
+                                    {recipe.cookingTime} min
                                 </div>
                             </div>
                         </div>
                         <div className="self-end w-1/3 flex justify-center">
-                            <svg
-                                width="38"
-                                height="45"
-                                viewBox="0 0 38 45"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                            >
-                                <path
-                                    d="M17.2322 43.7678C18.2085 44.7441 19.7915 44.7441 20.7678 43.7678L36.6777 27.8579C37.654 26.8816 37.654 25.2986 36.6777 24.3223C35.7014 23.346 34.1184 23.346 33.1421 24.3223L19 38.4645L4.85787 24.3223C3.88155 23.346 2.29864 23.346 1.32233 24.3223C0.346021 25.2986 0.346021 26.8816 1.32233 27.8579L17.2322 43.7678ZM16.5 1.09278e-07L16.5 42L21.5 42L21.5 -1.09278e-07L16.5 1.09278e-07Z"
-                                    fill="#279037"
-                                />
-                            </svg>
+                            <Link to={`/recipe/detail/${recipe.id}`}>
+                                <svg width="38" height="45" viewBox="0 0 38 45" fill="none">
+                                    <path
+                                        d="M17.2322 43.7678C18.2085 44.7441 19.7915 44.7441 20.7678 43.7678L36.6777 27.8579C37.654 26.8816 37.654 25.2986 36.6777 24.3223C35.7014 23.346 34.1184 23.346 33.1421 24.3223L19 38.4645L4.85787 24.3223C3.88155 23.346 2.29864 23.346 1.32233 24.3223C0.346021 25.2986 0.346021 26.8816 1.32233 27.8579L17.2322 43.7678ZM16.5 1.09278e-07L16.5 42L21.5 42L21.5 -1.09278e-07L16.5 1.09278e-07Z"
+                                        fill="#279037"
+                                    />
+                                </svg>
+                            </Link>
                         </div>
-                        <div className="w-1/3">tagy...</div>
+                        <div className="w-1/3 flex items-end justify-end">
+                            <ul className="flex flex-col">
+                                {recipe.tags.map((tag: string, index: number) => (
+                                    <li key={index}>{tag}</li>
+                                ))}
+                            </ul>
+                        </div>
                     </div>
                 </>
             );
