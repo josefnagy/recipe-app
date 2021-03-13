@@ -9,18 +9,18 @@ import RecipeDetail from './RecipeDetail';
 import Recipes from './Recipes';
 
 const App: React.FC = () => {
-    return (
-        <div className="flex h-screen font-heading">
-            <Router history={history}>
-                <Aside />
-                <Recipes />
-                <Switch>
-                    <Route path="/" exact component={AppInfo} />
-                    <Route path="/recipe/:id" exact component={RecipeDetail} />
-                </Switch>
-            </Router>
-        </div>
-    );
+  return (
+    <div className="flex h-screen font-heading">
+      <Router history={history}>
+        <Aside />
+        <Recipes />
+        <Switch>
+          <Route path="/" exact component={AppInfo} />
+          <Route path="/recipe/:id" exact component={RecipeDetail} />
+        </Switch>
+      </Router>
+    </div>
+  );
 };
 
 export default App;

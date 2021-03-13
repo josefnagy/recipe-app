@@ -16,27 +16,27 @@ import App from './components/App';
 // const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const persistConfig = {
-    key: 'root',
-    storage,
+  key: 'root',
+  storage,
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers);
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const store = createStore<any, any, unknown, unknown>(
-    persistedReducer,
-    composeWithDevTools(applyMiddleware(reduxThunk, logger)),
+  persistedReducer,
+  composeWithDevTools(applyMiddleware(reduxThunk, logger)),
 );
 
 const persistor = persistStore(store);
 
 ReactDOM.render(
-    <React.StrictMode>
-        <Provider store={store}>
-            <PersistGate loading={null} persistor={persistor}>
-                <App />
-            </PersistGate>
-        </Provider>
-    </React.StrictMode>,
-    document.getElementById('root'),
+  <React.StrictMode>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <App />
+      </PersistGate>
+    </Provider>
+  </React.StrictMode>,
+  document.getElementById('root'),
 );
