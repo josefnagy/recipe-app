@@ -5,7 +5,6 @@ import history from '../history';
 
 import Aside from './Aside';
 import AppInfo from './AppInfo';
-import RecipeInfo from './RecipeInfo';
 import RecipeDetail from './RecipeDetail';
 import Recipes from './Recipes';
 
@@ -17,8 +16,7 @@ const App: React.FC = () => {
                 <Recipes />
                 <Switch>
                     <Route path="/" exact component={AppInfo} />
-                    <Route path="/recipe/info/:id" exact component={RecipeInfo} />
-                    <Route path="/recipe/detail/:id" exact component={RecipeDetail} />
+                    <Route path="/recipe/:id" exact component={RecipeDetail} />
                 </Switch>
             </Router>
         </div>

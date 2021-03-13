@@ -19,7 +19,7 @@ const RecipeList: React.FC = () => {
         <Link
             className="py-1 px-3 block hover:bg-tertiary cursor-pointer hover:text-secondary"
             key={index}
-            to={`/recipe/info/${recipe.id}`}
+            to={`/recipe/${recipe.id}`}
         >
             {recipe.name}
         </Link>
