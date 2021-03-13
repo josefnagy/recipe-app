@@ -6,6 +6,7 @@ import history from '../history';
 import Aside from './Aside';
 import AppInfo from './AppInfo';
 import RecipeDetail from './RecipeDetail';
+import RecipeControls from './RecipeControls';
 import Recipes from './Recipes';
 
 const App: React.FC = () => {
@@ -14,6 +15,7 @@ const App: React.FC = () => {
       <Router history={history}>
         <Aside />
         <Recipes />
+        <RecipeControls />
         <Switch>
           <Route path="/" exact component={AppInfo} />
           <Route path="/recipe/:id" exact component={RecipeDetail} />
