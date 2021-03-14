@@ -15,7 +15,7 @@ const AppInfo: React.FC = () => {
   };
 
   return (
-    <div className="bg-tertiary p-20 flex flex-col ml-84">
+    <div className="flex-auto bg-tertiary p-20 flex flex-col ml-84">
       {renderAppInfo()}
     </div>
   );
