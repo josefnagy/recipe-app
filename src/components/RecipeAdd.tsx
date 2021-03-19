@@ -21,7 +21,10 @@ const RecipeAdd: React.FC = () => {
   const onSubmit = (data: Recipe) => console.log(data);
 
   return (
-    <div className="flex-auto bg-tertiary p-20 flex flex-col ml-84">
+    <div
+      id="add-recipe"
+      className="flex-auto bg-tertiary p-20 flex flex-col ml-84 h-screen overflow-y-auto"
+    >
       <h1 className="text-4xl font-heading uppercase text-primary text-center mb-8">
         Přidej nový recept
       </h1>
