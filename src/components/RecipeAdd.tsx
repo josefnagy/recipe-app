@@ -2,9 +2,21 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 
 import { Recipe } from '../store/recipes/types';
+import IngredientGroup from './IngredientGroup';
+
+const defaultValues = {
+  allIngredients: [
+    {
+      name: '',
+      ingredients: [{ name: '', amount: undefined, unit: '', note: '' }],
+    },
+  ],
+};
 
 const RecipeAdd: React.FC = () => {
-  const { register, handleSubmit } = useForm<Recipe>();
+  const { control, register, handleSubmit } = useForm<Recipe>({
+    defaultValues,
+  });
 
   const onSubmit = (data: Recipe) => console.log(data);
 
@@ -68,94 +80,9 @@ const RecipeAdd: React.FC = () => {
           {/* ------ INGREDIENT GROUP ------ */}
           <div className="flex flex-col">
             {/* ------ INGREDIENT GROUP HEADER ------ */}
-            <div className="flex mb-4">
-              <button className="mr-2">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                  <path
-                    d="M4 18H20M4 6H20H4ZM4 12H20H4Z"
-                    stroke="black"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </button>
-              <input
-                className="rounded-md flex-1 h-7 px-2 focus:outline-none focus:ring-2 focus:ring-primary font-light"
-                name="ingGroupName"
-                type="text"
-                ref={register}
-                placeholder="Skupina ingrediencí ( např. korpus, omáčka, náplň atd... )"
-              />
-              <button className="ml-2">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                  <path
-                    d="M6 6L18 18M6 18L18 6L6 18Z"
-                    stroke="black"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </button>
-            </div>
+            <IngredientGroup {...{ control, register, defaultValues }} />
             {/* INGREDIENTS LIST */}
-            <div>
-              {/* INGREDIENT */}
-              <div className="flex">
-                <div className="grid w-6 h-6 place-items-center bg-primary rounded-full text-white mr-2">
-                  1.
-                </div>
-                <input
-                  className="rounded-md flex-1 h-7 px-2 focus:outline-none focus:ring-2 focus:ring-primary font-light mr-2"
-                  name="ingredientName"
-                  type="text"
-                  ref={register}
-                  placeholder="Název ingredience"
-                />
-                <input
-                  className="rounded-md h-7 px-2 focus:outline-none focus:ring-2 focus:ring-primary font-light mr-2"
-                  name="amount"
-                  type="text"
-                  ref={register}
-                  placeholder="Množství"
-                />
-                <select
-                  name="unit"
-                  ref={register}
-                  className="rounded-md h-7 px-2 focus:outline-none focus:ring-2 focus:ring-primary font-light mr-2"
-                >
-                  <option value="g">g</option>
-                  <option value="kg">kg</option>
-                  <option value="ml">ml</option>
-                </select>
-                <input
-                  className="rounded-md h-7 px-2 focus:outline-none focus:ring-2 focus:ring-primary font-light mr-2"
-                  name="note"
-                  type="text"
-                  ref={register}
-                  placeholder="Poznámka"
-                />
-                <button>
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                    <path
-                      d="M6 6L18 18M6 18L18 6L6 18Z"
-                      stroke="black"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                </button>
-              </div>
-            </div>
-            <button className="text-center mt-4 ml-8 w-40 border border-primary rounded py-1 px-2 hover:bg-primary hover:text-white">
-              Přidat Ingredienci
-            </button>
           </div>
-          <button className="text-center mt-4 ml-8 w-52 border border-primary rounded py-1 px-2 hover:bg-primary hover:text-white self-end mr-8">
-            Přidat skupinu Ingrediencí
-          </button>
         </div>
 
         {/* BATTLE PLAN */}
