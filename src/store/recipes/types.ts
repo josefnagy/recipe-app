@@ -29,9 +29,13 @@ export interface Recipe {
   notes: string;
   tags: string[];
   allIngredients: IngredientGroup[];
-  battlePlan: string[];
+  battlePlan: Step[];
   createdAt: number;
   updatedAt: number;
+}
+
+export interface Step {
+  step: string;
 }
 
 export interface IngredientGroup {
@@ -51,4 +55,7 @@ export interface RecipesState {
   selectedRecipe: Recipe | null;
 }
 
-export type RecipeActionTypes = PersistStoreAction | ViewRecipeAction | FetchRecipeAction;
+export type RecipeActionTypes =
+  | PersistStoreAction
+  | ViewRecipeAction
+  | FetchRecipeAction;

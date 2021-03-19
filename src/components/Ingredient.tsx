@@ -20,7 +20,7 @@ const Ingredient: React.FC<UseFieldArrayOptions> = ({
     <>
       {fields.map((ingredient, k) => {
         return (
-          <div className="flex" key={k}>
+          <div className="flex" key={ingredient.id}>
             <div className="grid w-6 h-6 place-items-center bg-primary rounded-full text-white mr-2">
               {`${k + 1}.`}
             </div>

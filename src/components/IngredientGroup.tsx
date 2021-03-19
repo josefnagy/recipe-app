@@ -23,7 +23,11 @@ const IngredientGroup: React.FC<UseFieldArrayOptions> = ({
     <>
       {fields.map((ingGroup, index) => {
         return (
-          <div className="flex flex-col  mb-4" key={index} id="fish">
+          <div
+            className="flex flex-col  mb-4"
+            key={ingGroup.id}
+            id="ingredient-group"
+          >
             <div className="flex mb-4">
               <button className="mr-2">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
