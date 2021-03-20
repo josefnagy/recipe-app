@@ -15,8 +15,9 @@ const defaultValues = {
 };
 
 const RecipeAdd: React.FC = () => {
-  const { control, register, handleSubmit } = useForm<Recipe>({
+  const { control, register, handleSubmit, errors } = useForm<Recipe>({
     defaultValues,
+    mode: 'onBlur',
   });
 
   const { fields, remove, append } = useFieldArray({
@@ -35,11 +36,18 @@ const RecipeAdd: React.FC = () => {
         Přidej nový recept
       </h1>
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
-        <div className="mb-4 flex">
+        <div className="mb-4 flex relative">
+          <label
+            htmlFor="name"
+            className="text-indigo-900 font-light absolute bottom-7"
+          >
+            {errors.name &&
+              'Recept musí mít nějaký název a mít mezi 3 až 60 znaky'}
+          </label>
           <input
             className="rounded-md flex-1 h-7 mr-2 pl-2 focus:outline-none focus:ring-2 focus:ring-primary font-light"
             name="name"
-            ref={register}
+            ref={register({ required: true, minLength: 3, maxLength: 60 })}
             type="text"
             placeholder="Název receptu"
           />
@@ -47,7 +55,7 @@ const RecipeAdd: React.FC = () => {
             className="rounded-md  h-7 mr-2 px-2 text-right focus:outline-none focus:ring-2 focus:ring-primary font-light"
             name="cookingTime"
             ref={register}
-            type="text"
+            type="number"
             placeholder="Čas přípravy"
           />
           <select
@@ -59,20 +67,30 @@ const RecipeAdd: React.FC = () => {
             <option value="moderate">Střední</option>
             <option value="hard">Těžká</option>
           </select>
+          <label
+            htmlFor="portions"
+            className="text-indigo-900 font-light absolute bottom-7 right-0"
+          >
+            {errors.portions && 'Porcí musí být od 1 do 20'}
+          </label>
           <input
             className="rounded-md  h-7  px-2 text-right focus:outline-none focus:ring-2 focus:ring-primary font-light"
             name="portions"
-            ref={register}
-            type="text"
+            ref={register({ min: 1, max: 20 })}
+            type="number"
             placeholder="Počet porcí"
           />
         </div>
 
+        <label htmlFor="description" className="text-indigo-900 font-light">
+          {errors.description &&
+            'Recept musí mít nějaký popis a mít mezi 5 a 400 znaky'}
+        </label>
         <textarea
           className="rounded-md w-full h-24 p-2 focus:outline-none focus:ring-2 focus:ring-primary mb-2 font-light"
           name="description"
           id="description"
-          ref={register}
+          ref={register({ required: true, minLength: 5, maxLength: 400 })}
           placeholder="Popis receptu"
         ></textarea>
         <input
@@ -97,28 +115,43 @@ const RecipeAdd: React.FC = () => {
           {/* BATTLE PLAN STEP */}
           {fields.map((step, index) => {
             return (
-              <div className="flex" key={step.id}>
-                <div className="grid w-6 h-6 place-items-center bg-primary rounded-full text-white mr-2">
-                  {`${index + 1}.`}
+              <div className="flex relative flex-col" key={step.id}>
+                <label
+                  htmlFor={`battlePlan[${index}].step`}
+                  className="text-indigo-900 font-light ml-9"
+                >
+                  {errors.battlePlan
+                    ? errors.battlePlan[index] &&
+                      'Recept musí mít nějaký popis a mít mezi 5 a 400 znaky'
+                    : ''}
+                </label>
+                <div className="flex w-full">
+                  <div className="grid w-6 h-6 place-items-center bg-primary rounded-full text-white mr-2">
+                    {`${index + 1}.`}
+                  </div>
+                  <textarea
+                    className="rounded-md w-full h-24 p-2 focus:outline-none focus:ring-2 focus:ring-primary mr-2 mb-2 font-light"
+                    name={`battlePlan[${index}].step`}
+                    ref={register({
+                      required: true,
+                      minLength: 5,
+                      maxLength: 500,
+                    })}
+                    defaultValue={step.step}
+                    placeholder="Popis přípravy"
+                  ></textarea>
+                  <button type="button" onClick={() => remove(index)}>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                      <path
+                        d="M6 6L18 18M6 18L18 6L6 18Z"
+                        stroke="black"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </button>
                 </div>
-                <textarea
-                  className="rounded-md flex-1 h-24 p-2 focus:outline-none focus:ring-2 focus:ring-primary mr-2 mb-2 font-light"
-                  name={`battlePlan[${index}].step`}
-                  ref={register()}
-                  defaultValue={step.step}
-                  placeholder="Popis přípravy"
-                ></textarea>
-                <button type="button" onClick={() => remove(index)}>
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                    <path
-                      d="M6 6L18 18M6 18L18 6L6 18Z"
-                      stroke="black"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                </button>
               </div>
             );
           })}

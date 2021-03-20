@@ -22,10 +22,10 @@ export interface Recipe {
   id: string;
   name: string;
   description: string;
-  portions: number;
+  portions?: number;
   difficulty: string;
-  cookingTime: number;
-  url: string;
+  cookingTime?: number;
+  url?: string;
   notes: string;
   tags?: string[];
   allIngredients: IngredientGroup[];
@@ -47,7 +47,7 @@ export interface Ingredient {
   name: string;
   amount: number;
   unit: string;
-  note: string;
+  note?: string;
 }
 
 export interface RecipesState {
