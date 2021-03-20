@@ -27,7 +27,7 @@ export interface Recipe {
   cookingTime: number;
   url: string;
   notes: string;
-  tags: string[];
+  tags?: string[];
   allIngredients: IngredientGroup[];
   battlePlan: Step[];
   createdAt: number;

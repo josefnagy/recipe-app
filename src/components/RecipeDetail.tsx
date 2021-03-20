@@ -106,9 +106,11 @@ const RecipeDetail: React.FC<RecipeDetailProps> = ({ match }) => {
             </div>
             <div className="w-1/3 flex items-end justify-end">
               <ul className="flex flex-col">
-                {recipe.tags.map((tag: string, index: number) => (
-                  <li key={index}>{tag}</li>
-                ))}
+                {typeof recipe.tags !== 'undefined'
+                  ? recipe.tags.map((tag: string, index: number) => (
+                      <li key={index}>{tag}</li>
+                    ))
+                  : ''}
               </ul>
             </div>
           </div>
