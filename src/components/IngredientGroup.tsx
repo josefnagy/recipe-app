@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
 import { useFieldArray } from 'react-hook-form';
 
@@ -6,12 +7,14 @@ import Ingredient from './Ingredient';
 type UseFieldArrayOptions = {
   control?: any;
   register?: any;
+  errors?: any;
   defaultValues?: any;
 };
 
 const IngredientGroup: React.FC<UseFieldArrayOptions> = ({
   control,
   register,
+  errors,
   defaultValues,
 }) => {
   const { fields, remove, append } = useFieldArray({
@@ -65,7 +68,7 @@ const IngredientGroup: React.FC<UseFieldArrayOptions> = ({
               </button>
             </div>
 
-            <Ingredient nestIndex={index} {...{ control, register }} />
+            <Ingredient nestIndex={index} {...{ control, errors, register }} />
           </div>
         );
       })}

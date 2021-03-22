@@ -5,12 +5,14 @@ import { useFieldArray } from 'react-hook-form';
 type UseFieldArrayOptions = {
   control?: any;
   register?: any;
+  errors?: any;
   nestIndex: number;
 };
 
 const Ingredient: React.FC<UseFieldArrayOptions> = ({
   nestIndex,
   control,
+  errors,
   register,
 }) => {
   const { fields, append, remove } = useFieldArray({
@@ -21,55 +23,68 @@ const Ingredient: React.FC<UseFieldArrayOptions> = ({
     <>
       {fields.map((ingredient, k) => {
         return (
-          <div className="flex" key={ingredient.id}>
-            <div className="grid w-6 h-6 place-items-center bg-primary rounded-full text-white mr-2">
-              {`${k + 1}.`}
-            </div>
-            <input
-              className="rounded-md flex-1 h-7 px-2 focus:outline-none focus:ring-2 focus:ring-primary font-light mr-2"
-              name={`allIngredients[${nestIndex}].ingredients[${k}].name`}
-              type="text"
-              ref={register()}
-              defaultValue={ingredient.name}
-              placeholder="Název ingredience"
-            />
-            <input
-              className="rounded-md h-7 px-2 focus:outline-none focus:ring-2 focus:ring-primary font-light mr-2"
-              name={`allIngredients[${nestIndex}].ingredients[${k}].amount`}
-              type="text"
-              ref={register()}
-              defaultValue={ingredient.amount}
-              placeholder="Množství"
-            />
-            <select
-              name={`allIngredients[${nestIndex}].ingredients[${k}].unit`}
-              ref={register()}
-              defaultValue={ingredient.unit}
-              className="rounded-md h-7 px-2 focus:outline-none focus:ring-2 focus:ring-primary font-light mr-2"
+          <div className="flex flex-col mb-2" key={ingredient.id}>
+            <label
+              htmlFor={`allIngredients[${nestIndex}].ingredients[${k}].name`}
+              className="text-indigo-900 font-light ml-9"
             >
-              <option value="g">g</option>
-              <option value="kg">kg</option>
-              <option value="ml">ml</option>
-            </select>
-            <input
-              className="rounded-md h-7 px-2 focus:outline-none focus:ring-2 focus:ring-primary font-light mr-2"
-              name={`allIngredients[${nestIndex}].ingredients[${k}].note`}
-              type="text"
-              ref={register()}
-              defaultValue={ingredient.note}
-              placeholder="Poznámka"
-            />
-            <button type="button" onClick={() => remove(k)}>
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                <path
-                  d="M6 6L18 18M6 18L18 6L6 18Z"
-                  stroke="black"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </button>
+              {errors.allIngredients &&
+              errors.allIngredients[nestIndex] &&
+              errors.allIngredients[nestIndex].ingredients
+                ? errors.allIngredients[nestIndex].ingredients[k] &&
+                  'Chybí údaje o ingredienci'
+                : ''}
+            </label>
+            <div className="flex w-full">
+              <div className="grid w-6 h-6 place-items-center bg-primary rounded-full text-white mr-2">
+                {`${k + 1}.`}
+              </div>
+              <input
+                className="rounded-md flex-1 h-7 px-2 focus:outline-none focus:ring-2 focus:ring-primary font-light mr-2"
+                name={`allIngredients[${nestIndex}].ingredients[${k}].name`}
+                type="text"
+                ref={register({ required: true, minLength: 3, maxLength: 45 })}
+                defaultValue={ingredient.name}
+                placeholder="Název ingredience"
+              />
+              <input
+                className="rounded-md h-7 px-2 focus:outline-none focus:ring-2 focus:ring-primary font-light mr-2"
+                name={`allIngredients[${nestIndex}].ingredients[${k}].amount`}
+                type="number"
+                ref={register({ required: true, min: 3, max: 9999 })}
+                defaultValue={ingredient.amount}
+                placeholder="Množství"
+              />
+              <select
+                name={`allIngredients[${nestIndex}].ingredients[${k}].unit`}
+                ref={register()}
+                defaultValue={ingredient.unit}
+                className="rounded-md h-7 px-2 focus:outline-none focus:ring-2 focus:ring-primary font-light mr-2"
+              >
+                <option value="g">g</option>
+                <option value="kg">kg</option>
+                <option value="ml">ml</option>
+              </select>
+              <input
+                className="rounded-md h-7 px-2 focus:outline-none focus:ring-2 focus:ring-primary font-light mr-2"
+                name={`allIngredients[${nestIndex}].ingredients[${k}].note`}
+                type="text"
+                ref={register()}
+                defaultValue={ingredient.note}
+                placeholder="Poznámka"
+              />
+              <button type="button" onClick={() => remove(k)}>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M6 6L18 18M6 18L18 6L6 18Z"
+                    stroke="black"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </button>
+            </div>
           </div>
         );
       })}

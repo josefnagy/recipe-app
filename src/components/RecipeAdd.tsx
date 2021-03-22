@@ -105,7 +105,9 @@ const RecipeAdd: React.FC = () => {
         <div className="mt-6 flex flex-col">
           <h2 className="text-2xl mb-2">Ingredience:</h2>
           <div className="flex flex-col">
-            <IngredientGroup {...{ control, register, defaultValues }} />
+            <IngredientGroup
+              {...{ control, register, errors, defaultValues }}
+            />
           </div>
         </div>
 
