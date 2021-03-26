@@ -1,4 +1,12 @@
-import { Recipe, VIEW_RECIPE, FETCH_RECIPES, RecipeActionTypes } from './types';
+import {
+  Recipe,
+  VIEW_RECIPE,
+  FETCH_RECIPES,
+  ADD_RECIPE,
+  ADD_RECIPE_FAIL,
+  ADD_RECIPE_SUCCESS,
+  RecipeActionTypes,
+} from './types';
 
 export const fetchRecipes = (): RecipeActionTypes => {
   return {
@@ -14,6 +22,7 @@ export const viewRecipe = (recipeId: Recipe['id']): RecipeActionTypes => {
   };
 };
 
+// initial recipes
 const recipes: Recipe[] = [
   {
     id: 'aslkdhldksfhjklashdflkashdf',
