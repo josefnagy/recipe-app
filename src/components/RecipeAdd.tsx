@@ -1,7 +1,9 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import { useForm, useFieldArray } from 'react-hook-form';
 
 import { Recipe } from '../store/recipes/types';
+import { addRecipe } from '../store/recipes/actions';
 import IngredientGroup from './IngredientGroup';
 
 const defaultValues = {
@@ -15,6 +17,7 @@ const defaultValues = {
 };
 
 const RecipeAdd: React.FC = () => {
+  const dispatch = useDispatch();
   const { control, register, handleSubmit, errors } = useForm<Recipe>({
     defaultValues,
     mode: 'onBlur',
@@ -25,7 +28,10 @@ const RecipeAdd: React.FC = () => {
     name: 'battlePlan',
   });
 
-  const onSubmit = (data: Recipe) => console.log(data);
+  const onSubmit = (data: Recipe) => {
+    // console.log(data);
+    dispatch(addRecipe(data));
+  };
 
   return (
     <div
@@ -164,6 +170,18 @@ const RecipeAdd: React.FC = () => {
           >
             Přidat krok postupu
           </button>
+        </div>
+
+        <div className="mt-6 flex flex-col">
+          <h2 className="text-2xl mb-2">Poznámky k receptu:</h2>
+
+          <textarea
+            className="rounded-md w-full h-24 p-2 focus:outline-none focus:ring-2 focus:ring-primary mb-2 font-light"
+            name="notes"
+            id="notes"
+            ref={register}
+            placeholder="dojmy po uvaření, co přidat, co naopak ubrat, na co si dát pozor atd..."
+          ></textarea>
         </div>
 
         <input

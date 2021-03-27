@@ -1,13 +1,23 @@
 import _ from 'lodash';
 
-import { RecipesState, RecipeActionTypes, VIEW_RECIPE, FETCH_RECIPES, PERSIST } from './types';
+import {
+  RecipesState,
+  RecipeActionTypes,
+  ADD_RECIPE,
+  VIEW_RECIPE,
+  FETCH_RECIPES,
+  PERSIST,
+} from './types';
 
 const INITIAL_STATE: RecipesState = {
   allRecipes: [],
   selectedRecipe: null,
 };
 
-export const recipesReducer = (state = INITIAL_STATE, action: RecipeActionTypes): RecipesState => {
+export const recipesReducer = (
+  state = INITIAL_STATE,
+  action: RecipeActionTypes,
+): RecipesState => {
   switch (action.type) {
     case PERSIST:
       if (action.payload) {
@@ -15,6 +25,10 @@ export const recipesReducer = (state = INITIAL_STATE, action: RecipeActionTypes)
           ...state,
         };
       }
+      return state;
+
+    case ADD_RECIPE:
+      console.log('added Recipe. ...');
       return state;
 
     case FETCH_RECIPES:

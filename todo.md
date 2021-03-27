@@ -1,0 +1,1 @@
+- naposled jsem udelal reducer na ADD_RECIPE, , ted je potreba zavolat akci a testnout to

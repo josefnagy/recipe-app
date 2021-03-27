@@ -1,3 +1,17 @@
+import db from '../../api/firebase';
+import { ThunkAction } from 'redux-thunk';
+import { Dispatch } from 'redux';
+import { v4 as uuid } from 'uuid';
+
+import { RecipesState } from './types';
+
+export type ThunkResult<R> = ThunkAction<
+  R,
+  RecipesState,
+  undefined,
+  RecipeActionTypes
+>;
+
 import {
   Recipe,
   VIEW_RECIPE,
@@ -8,6 +22,35 @@ import {
   RecipeActionTypes,
 } from './types';
 
+// ADD RECIPE
+
+export const addRecipe = (recipe: Recipe): ThunkResult<void> => async (
+  dispatch,
+) => {
+  recipe.id = uuid();
+  recipe.createdAt = Date.now();
+  recipe.updatedAt = recipe.createdAt;
+
+  handleAddRecipe(dispatch);
+
+  db.collection('allRecipes')
+    .doc(recipe.id)
+    .set(recipe)
+    .then(() => {
+      console.log('well this is weird');
+    })
+    .catch((error) => {
+      console.log('handle ERROR', error);
+    });
+};
+
+const handleAddRecipe = (dispatch: Dispatch) => {
+  dispatch({ type: ADD_RECIPE });
+};
+
+//tady to dodelat
+// const handleAddRecipeSuccess = (dispatch: Dispatch<RecipeActionTypes>)
+
 export const fetchRecipes = (): RecipeActionTypes => {
   return {
     type: FETCH_RECIPES,
@@ -16,10 +59,7 @@ export const fetchRecipes = (): RecipeActionTypes => {
 };
 
 export const viewRecipe = (recipeId: Recipe['id']): RecipeActionTypes => {
-  return {
-    type: VIEW_RECIPE,
-    payload: recipeId,
-  };
+  return { type: VIEW_RECIPE, payload: recipeId };
 };
 
 // initial recipes
