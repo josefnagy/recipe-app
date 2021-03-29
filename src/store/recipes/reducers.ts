@@ -8,6 +8,7 @@ import {
   VIEW_RECIPE,
   FETCH_RECIPES,
   PERSIST,
+  ADD_RECIPE_FAIL,
 } from './types';
 
 const INITIAL_STATE: RecipesState = {
@@ -36,7 +37,6 @@ export const recipesReducer = (
       return { ...state, loading: true };
 
     case ADD_RECIPE_SUCCESS:
-      console.log(action.payload);
       const { id } = action.payload;
       return {
         ...state,
@@ -45,6 +45,14 @@ export const recipesReducer = (
           [id]: action.payload,
         },
         loading: false,
+        selectedRecipe: null,
+      };
+    case ADD_RECIPE_FAIL:
+      return {
+        ...state,
+        loading: false,
+        selectedRecipe: null,
+        error: action.payload,
       };
 
     case FETCH_RECIPES:
@@ -53,6 +61,7 @@ export const recipesReducer = (
       return {
         ...state,
         allRecipes: { ...state.allRecipes, ...fetchedRecipes },
+        selectedRecipe: null,
       };
 
     case VIEW_RECIPE:

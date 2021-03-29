@@ -21,6 +21,7 @@ const RecipeAdd: React.FC = () => {
   const dispatch = useDispatch();
 
   const loading = useAppSelector((state) => state.recipes.loading);
+  const error = useAppSelector((state) => state.recipes.error);
 
   useEffect(() => {
     if (loading) {
@@ -28,6 +29,12 @@ const RecipeAdd: React.FC = () => {
       console.log('LOADING ....');
     }
   }, [loading]);
+
+  useEffect(() => {
+    if (error) {
+      // handle Firebase Error some way ...
+    }
+  }, [error]);
 
   const { control, register, handleSubmit, errors } = useForm<Recipe>({
     defaultValues,

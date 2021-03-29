@@ -33,6 +33,7 @@ interface AddRecipeSuccess {
 
 interface AddRecipeFail {
   type: typeof ADD_RECIPE_FAIL;
+  payload: string;
 }
 
 export interface Recipe {
