@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useForm, useFieldArray } from 'react-hook-form';
 
 import { Recipe } from '../store/recipes/types';
 import { addRecipe } from '../store/recipes/actions';
 import IngredientGroup from './IngredientGroup';
+import { useAppSelector } from '../hooks';
 
 const defaultValues = {
   allIngredients: [
@@ -18,6 +19,16 @@ const defaultValues = {
 
 const RecipeAdd: React.FC = () => {
   const dispatch = useDispatch();
+
+  const loading = useAppSelector((state) => state.recipes.loading);
+
+  useEffect(() => {
+    if (loading) {
+      // show loader or something ....
+      console.log('LOADING ....');
+    }
+  }, [loading]);
+
   const { control, register, handleSubmit, errors } = useForm<Recipe>({
     defaultValues,
     mode: 'onBlur',

@@ -174,8 +174,8 @@ const RecipeDetail: React.FC<RecipeDetailProps> = ({ match }) => {
   };
 
   return (
-    <div className="bg-tertiary ml-84 ">
-      <section className="flex flex-col p-20 h-screen">
+    <div className="bg-tertiary ml-84">
+      <section className="flex flex-col p-20 h-screen w-auto">
         {renderRecipeInfo()}
       </section>
       <section

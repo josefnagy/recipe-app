@@ -4,14 +4,17 @@ import {
   RecipesState,
   RecipeActionTypes,
   ADD_RECIPE,
+  ADD_RECIPE_SUCCESS,
   VIEW_RECIPE,
   FETCH_RECIPES,
   PERSIST,
 } from './types';
 
 const INITIAL_STATE: RecipesState = {
-  allRecipes: [],
+  allRecipes: {},
   selectedRecipe: null,
+  loading: false,
+  error: null,
 };
 
 export const recipesReducer = (
@@ -21,20 +24,35 @@ export const recipesReducer = (
   switch (action.type) {
     case PERSIST:
       if (action.payload) {
+        console.log(action.payload);
         return {
           ...state,
+          allRecipes: action.payload.recipes.allRecipes,
         };
       }
       return state;
 
     case ADD_RECIPE:
-      console.log('added Recipe. ...');
-      return state;
+      return { ...state, loading: true };
 
-    case FETCH_RECIPES:
+    case ADD_RECIPE_SUCCESS:
+      console.log(action.payload);
+      const { id } = action.payload;
       return {
         ...state,
-        allRecipes: action.payload,
+        allRecipes: {
+          ...state.allRecipes,
+          [id]: action.payload,
+        },
+        loading: false,
+      };
+
+    case FETCH_RECIPES:
+      // tohle pak v budoucnu smazat a dat do returnu, action.payload normalne bude obsahovat vzycky vsechny recepty takze neni potreba je tam pridavat
+      const fetchedRecipes = _.mapKeys(action.payload, 'id');
+      return {
+        ...state,
+        allRecipes: { ...state.allRecipes, ...fetchedRecipes },
       };
 
     case VIEW_RECIPE:

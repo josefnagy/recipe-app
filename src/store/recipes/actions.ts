@@ -37,10 +37,12 @@ export const addRecipe = (recipe: Recipe): ThunkResult<void> => async (
     .doc(recipe.id)
     .set(recipe)
     .then(() => {
-      console.log('well this is weird');
+      console.log('--- ADDED RCP TO DB ---');
+      handleAddRecipeSuccess(dispatch, recipe);
     })
     .catch((error) => {
-      console.log('handle ERROR', error);
+      console.error('Error adding user', error);
+      handleAddRecipeFail(dispatch, error);
     });
 };
 
@@ -48,8 +50,19 @@ const handleAddRecipe = (dispatch: Dispatch) => {
   dispatch({ type: ADD_RECIPE });
 };
 
-//tady to dodelat
-// const handleAddRecipeSuccess = (dispatch: Dispatch<RecipeActionTypes>)
+const handleAddRecipeSuccess = (
+  dispatch: Dispatch<RecipeActionTypes>,
+  response: Recipe,
+) => {
+  dispatch({ type: ADD_RECIPE_SUCCESS, payload: response });
+};
+
+const handleAddRecipeFail = (
+  dispatch: Dispatch<RecipeActionTypes>,
+  error: string,
+) => {
+  dispatch({ type: ADD_RECIPE_FAIL, payload: error });
+};
 
 export const fetchRecipes = (): RecipeActionTypes => {
   return {
@@ -160,7 +173,7 @@ const recipes: Recipe[] = [
     updatedAt: 321354646512,
   },
   {
-    id: 'xvczvzxdfasdasfadasfasf ',
+    id: 'xvczvzxdfasdasfadasfasf',
     name: 'Mrkvovo fenyklová polévka ',
     description: 'Prostě super polívčička',
     portions: 4,

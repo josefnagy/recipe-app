@@ -8,7 +8,8 @@ export const ADD_RECIPE_FAIL = 'ADD_RECIPE_FAIL';
 
 interface PersistStoreAction {
   type: typeof PERSIST;
-  payload: Record<string, unknown>;
+  // payload: Record<string, unknown>;
+  payload: RootState;
 }
 
 interface ViewRecipeAction {
@@ -50,6 +51,10 @@ export interface Recipe {
   updatedAt: number;
 }
 
+export interface Recipes {
+  [id: string]: Recipe;
+}
+
 export interface Step {
   step: string;
 }
@@ -67,8 +72,13 @@ export interface Ingredient {
 }
 
 export interface RecipesState {
-  allRecipes: Recipe[];
+  allRecipes: Recipes;
   selectedRecipe: Recipe | null;
+  loading: boolean;
+  error: string | null;
+}
+export interface RootState {
+  readonly recipes: RecipesState;
 }
 
 export type RecipeActionTypes =
