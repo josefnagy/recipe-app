@@ -51,7 +51,7 @@ const Ingredient: React.FC<UseFieldArrayOptions> = ({
                 className="rounded-md h-7 px-2 focus:outline-none focus:ring-2 focus:ring-primary font-light mr-2"
                 name={`allIngredients[${nestIndex}].ingredients[${k}].amount`}
                 type="number"
-                ref={register({ required: true, min: 3, max: 9999 })}
+                ref={register({ required: true, min: 1, max: 9999 })}
                 defaultValue={ingredient.amount}
                 placeholder="Množství"
               />

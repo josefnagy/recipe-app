@@ -8,7 +8,7 @@ import AppInfo from './AppInfo';
 import RecipeAdd from './RecipeAdd';
 import RecipeEdit from './RecipeEdit';
 import RecipeDetail from './RecipeDetail';
-import RecipeControls from './RecipeControls';
+// import RecipeControls from './RecipeControls';
 import Recipes from './Recipes';
 
 const App: React.FC = () => {
@@ -17,7 +17,7 @@ const App: React.FC = () => {
       <Router history={history}>
         <Aside />
         <Recipes />
-        <RecipeControls />
+        {/* <RecipeControls /> */}
         <Switch>
           <Route path="/" exact component={AppInfo} />
           <Route path="/recipe/add" component={RecipeAdd} />

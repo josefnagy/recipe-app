@@ -7,6 +7,9 @@ export const VIEW_RECIPE = 'VIEW_RECIPE';
 export const ADD_RECIPE = 'ADD_RECIPE';
 export const ADD_RECIPE_SUCCESS = 'ADD_RECIPE_SUCCESS';
 export const ADD_RECIPE_FAIL = 'ADD_RECIPE_FAIL';
+export const DELETE_RECIPE = 'DELETE_RECIPE';
+export const DELETE_RECIPE_SUCCESS = 'DELETE_RECIPE_SUCCESS';
+export const DELETE_RECIPE_FAIL = 'DELETE_RECIPE_FAIL';
 
 interface PersistStoreAction {
   type: typeof PERSIST;
@@ -43,6 +46,20 @@ interface AddRecipeSuccess {
 
 interface AddRecipeFail {
   type: typeof ADD_RECIPE_FAIL;
+  payload: string;
+}
+
+interface DeleteRecipe {
+  type: typeof DELETE_RECIPE;
+}
+
+interface DeleteRecipeSuccess {
+  type: typeof DELETE_RECIPE_SUCCESS;
+  payload: string;
+}
+
+interface DeleteRecipeFail {
+  type: typeof DELETE_RECIPE_FAIL;
   payload: string;
 }
 
@@ -100,4 +117,7 @@ export type RecipeActionTypes =
   | AddRecipeFail
   | FetchRecipes
   | FetchRecipesSuccess
-  | FetchRecipesFail;
+  | FetchRecipesFail
+  | DeleteRecipe
+  | DeleteRecipeSuccess
+  | DeleteRecipeFail;

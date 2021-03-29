@@ -3,7 +3,12 @@ import { ThunkAction } from 'redux-thunk';
 import { Dispatch } from 'redux';
 import { v4 as uuid } from 'uuid';
 
-import { RecipesState } from './types';
+import {
+  DELETE_RECIPE,
+  DELETE_RECIPE_FAIL,
+  DELETE_RECIPE_SUCCESS,
+  RecipesState,
+} from './types';
 import history from '../../history';
 
 export type ThunkResult<R> = ThunkAction<
@@ -109,6 +114,44 @@ const handleFetchRecipesFail = (
   error: string,
 ) => {
   dispatch({ type: FETCH_RECIPES_FAIL, payload: error });
+};
+
+//  -----------          DELETING RECIPE ----------------------
+// export const deleteRecipe = (deletedId: string): ThunkResult<void> => async (
+export const deleteRecipe = (deletedId: string): ThunkResult<void> => async (
+  dispatch,
+) => {
+  handleDeleteRecipe(dispatch);
+  await db
+    .collection('allRecipes')
+    .doc(deletedId)
+    .delete()
+    .then(() => {
+      console.log('RECIPE DELETED ...');
+      handleDeleteRecipeSuccess(dispatch, deletedId);
+    })
+    .catch((error) => {
+      console.error('Error deleting recipe ', error);
+      handleDeleteRecipeFail(dispatch, error);
+    });
+};
+
+const handleDeleteRecipe = (dispatch: Dispatch) => {
+  dispatch({ type: DELETE_RECIPE });
+};
+
+const handleDeleteRecipeSuccess = (
+  dispatch: Dispatch<RecipeActionTypes>,
+  response: string,
+) => {
+  dispatch({ type: DELETE_RECIPE_SUCCESS, payload: response });
+};
+
+const handleDeleteRecipeFail = (
+  dispatch: Dispatch<RecipeActionTypes>,
+  error: string,
+) => {
+  dispatch({ type: DELETE_RECIPE_FAIL, payload: error });
 };
 
 export const viewRecipe = (recipeId: Recipe['id']): RecipeActionTypes => {

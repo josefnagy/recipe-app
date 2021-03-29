@@ -6,6 +6,7 @@ import { Link } from 'react-scroll';
 import { Recipe } from '../store/recipes/types';
 import { AppState } from '../store';
 import { viewRecipe } from '../store/recipes/actions';
+import RecipeControls from './RecipeControls';
 interface RecipeDetailProps {
   match: {
     params: {
@@ -28,6 +29,7 @@ const RecipeDetail: React.FC<RecipeDetailProps> = ({ match }) => {
     if (recipe) {
       return (
         <>
+          <RecipeControls id={match.params.id} />
           <div className="flex items-end justify-center flex-col h-full">
             <h2 className="text-7xl font-heading self-start">{recipe.name}</h2>
             <p className="w-1/2  mt-14 border-l-4 pl-3 border-primary font-light">

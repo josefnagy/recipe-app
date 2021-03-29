@@ -1,9 +1,12 @@
 import React from 'react';
 
+import RecipeControls from './RecipeControls';
+
 const AppInfo: React.FC = () => {
   const renderAppInfo = () => {
     return (
       <>
+        <RecipeControls id={undefined} />
         <h2 className="text-7xl font-heading">App INFO</h2>
         <p className="font-light mt-4 w-2/3">
           Hello my friend from the INTERNET, Welcome to best app for recipes. I

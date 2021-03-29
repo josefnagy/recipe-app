@@ -11,6 +11,9 @@ import {
   ADD_RECIPE_FAIL,
   FETCH_RECIPES_SUCCESS,
   FETCH_RECIPES_FAIL,
+  DELETE_RECIPE,
+  DELETE_RECIPE_SUCCESS,
+  DELETE_RECIPE_FAIL,
 } from './types';
 
 const INITIAL_STATE: RecipesState = {
@@ -37,6 +40,7 @@ export const recipesReducer = (
 
     case ADD_RECIPE:
     case FETCH_RECIPES:
+    case DELETE_RECIPE:
       return { ...state, loading: true, selectedRecipe: null };
 
     case ADD_RECIPE_SUCCESS:
@@ -51,8 +55,17 @@ export const recipesReducer = (
         selectedRecipe: null,
       };
 
+    case DELETE_RECIPE_SUCCESS:
+      return {
+        ...state,
+        allRecipes: { ..._.omit(state.allRecipes, action.payload) },
+        loading: false,
+        selectedRecipe: null,
+      };
+
     case ADD_RECIPE_FAIL:
     case FETCH_RECIPES_FAIL:
+    case DELETE_RECIPE_FAIL:
       return {
         ...state,
         loading: false,
@@ -64,7 +77,6 @@ export const recipesReducer = (
       return {
         ...state,
         loading: false,
-        selectedRecipe: null,
         allRecipes: _.mapKeys(action.payload, 'id'),
       };
 
