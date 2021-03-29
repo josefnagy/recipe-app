@@ -1,6 +1,8 @@
 export const PERSIST = 'persist/REHYDRATE';
 
 export const FETCH_RECIPES = 'FETCH_RECIPES';
+export const FETCH_RECIPES_SUCCESS = 'FETCH_RECIPES_SUCCESS';
+export const FETCH_RECIPES_FAIL = 'FETCH_RECIPES_FAIL';
 export const VIEW_RECIPE = 'VIEW_RECIPE';
 export const ADD_RECIPE = 'ADD_RECIPE';
 export const ADD_RECIPE_SUCCESS = 'ADD_RECIPE_SUCCESS';
@@ -17,9 +19,17 @@ interface ViewRecipeAction {
   payload: Recipe['id'];
 }
 
-interface FetchRecipeAction {
+interface FetchRecipes {
   type: typeof FETCH_RECIPES;
+}
+interface FetchRecipesSuccess {
+  type: typeof FETCH_RECIPES_SUCCESS;
   payload: Recipe[];
+}
+
+interface FetchRecipesFail {
+  type: typeof FETCH_RECIPES_FAIL;
+  payload: string;
 }
 
 interface AddRecipe {
@@ -85,7 +95,9 @@ export interface RootState {
 export type RecipeActionTypes =
   | PersistStoreAction
   | ViewRecipeAction
-  | FetchRecipeAction
   | AddRecipe
   | AddRecipeSuccess
-  | AddRecipeFail;
+  | AddRecipeFail
+  | FetchRecipes
+  | FetchRecipesSuccess
+  | FetchRecipesFail;

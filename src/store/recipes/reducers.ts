@@ -9,6 +9,8 @@ import {
   FETCH_RECIPES,
   PERSIST,
   ADD_RECIPE_FAIL,
+  FETCH_RECIPES_SUCCESS,
+  FETCH_RECIPES_FAIL,
 } from './types';
 
 const INITIAL_STATE: RecipesState = {
@@ -34,7 +36,8 @@ export const recipesReducer = (
       return state;
 
     case ADD_RECIPE:
-      return { ...state, loading: true };
+    case FETCH_RECIPES:
+      return { ...state, loading: true, selectedRecipe: null };
 
     case ADD_RECIPE_SUCCESS:
       const { id } = action.payload;
@@ -47,7 +50,9 @@ export const recipesReducer = (
         loading: false,
         selectedRecipe: null,
       };
+
     case ADD_RECIPE_FAIL:
+    case FETCH_RECIPES_FAIL:
       return {
         ...state,
         loading: false,
@@ -55,13 +60,12 @@ export const recipesReducer = (
         error: action.payload,
       };
 
-    case FETCH_RECIPES:
-      // tohle pak v budoucnu smazat a dat do returnu, action.payload normalne bude obsahovat vzycky vsechny recepty takze neni potreba je tam pridavat
-      const fetchedRecipes = _.mapKeys(action.payload, 'id');
+    case FETCH_RECIPES_SUCCESS:
       return {
         ...state,
-        allRecipes: { ...state.allRecipes, ...fetchedRecipes },
+        loading: false,
         selectedRecipe: null,
+        allRecipes: _.mapKeys(action.payload, 'id'),
       };
 
     case VIEW_RECIPE:
