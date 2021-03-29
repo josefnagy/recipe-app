@@ -4,6 +4,7 @@ import { Dispatch } from 'redux';
 import { v4 as uuid } from 'uuid';
 
 import { RecipesState } from './types';
+import history from '../../history';
 
 export type ThunkResult<R> = ThunkAction<
   R,
@@ -55,6 +56,7 @@ const handleAddRecipeSuccess = (
   response: Recipe,
 ) => {
   dispatch({ type: ADD_RECIPE_SUCCESS, payload: response });
+  history.push('/');
 };
 
 const handleAddRecipeFail = (
