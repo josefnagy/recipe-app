@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { Recipe } from '../store/recipes/types';
 import { deleteRecipe } from '../store/recipes/actions';
 import { Modal } from './Modal';
+import history from '../history';
 
 interface RecipeDeleteProps {
   match: {
@@ -52,6 +53,7 @@ const RecipeDelete: React.FC<RecipeDeleteProps> = ({ match }) => {
         title="Delete Recipe"
         content={renderContent()}
         actions={renderActions()}
+        onDismiss={() => history.push('/')}
       />
     </div>
   );

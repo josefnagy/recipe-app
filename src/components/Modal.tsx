@@ -1,7 +1,14 @@
 import React, { ReactPortal } from 'react';
 import ReactDOM from 'react-dom';
 
-export const Modal = (props: any): ReactPortal => {
+interface ModalProps {
+  onDismiss: () => void;
+  title: string;
+  content: JSX.Element;
+  actions: JSX.Element;
+}
+
+export const Modal = (props: ModalProps): ReactPortal => {
   return ReactDOM.createPortal(
     <div
       onClick={props.onDismiss}

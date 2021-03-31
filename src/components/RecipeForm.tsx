@@ -6,6 +6,7 @@ import { Recipe } from '../store/recipes/types';
 import IngredientGroup from './IngredientGroup';
 
 interface RecipeFormProps {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   defaultValues: any;
   onSubmit: (recipe: Recipe) => void;
 }
