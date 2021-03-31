@@ -7,8 +7,7 @@ import IngredientGroup from './IngredientGroup';
 
 interface RecipeFormProps {
   defaultValues: any;
-  onSubmit: any;
-  currentRecipe?: Recipe;
+  onSubmit: (recipe: Recipe) => void;
 }
 
 const RecipeForm: React.FC<RecipeFormProps> = ({ defaultValues, onSubmit }) => {
