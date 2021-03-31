@@ -3,13 +3,16 @@ export const PERSIST = 'persist/REHYDRATE';
 export const FETCH_RECIPES = 'FETCH_RECIPES';
 export const FETCH_RECIPES_SUCCESS = 'FETCH_RECIPES_SUCCESS';
 export const FETCH_RECIPES_FAIL = 'FETCH_RECIPES_FAIL';
-export const VIEW_RECIPE = 'VIEW_RECIPE';
+export const FETCH_RECIPE = 'FETCH_RECIPE';
 export const ADD_RECIPE = 'ADD_RECIPE';
 export const ADD_RECIPE_SUCCESS = 'ADD_RECIPE_SUCCESS';
 export const ADD_RECIPE_FAIL = 'ADD_RECIPE_FAIL';
 export const DELETE_RECIPE = 'DELETE_RECIPE';
 export const DELETE_RECIPE_SUCCESS = 'DELETE_RECIPE_SUCCESS';
 export const DELETE_RECIPE_FAIL = 'DELETE_RECIPE_FAIL';
+export const EDIT_RECIPE = 'EDIT_RECIPE';
+export const EDIT_RECIPE_SUCCESS = 'EDIT_RECIPE_SUCCESS';
+export const EDIT_RECIPE_FAIL = 'EDIT_RECIPE_FAIL';
 
 interface PersistStoreAction {
   type: typeof PERSIST;
@@ -17,11 +20,23 @@ interface PersistStoreAction {
   payload: RootState;
 }
 
-interface ViewRecipeAction {
-  type: typeof VIEW_RECIPE;
-  payload: Recipe['id'];
+interface EditRecipeAction {
+  type: typeof EDIT_RECIPE;
 }
 
+interface EditRecipeSuccessAction {
+  type: typeof EDIT_RECIPE_SUCCESS;
+  payload: Recipe;
+}
+
+interface EditRecipeFailAction {
+  type: typeof EDIT_RECIPE_FAIL;
+}
+
+interface FetchRecipeAction {
+  type: typeof FETCH_RECIPE;
+  payload: Recipe['id'];
+}
 interface FetchRecipes {
   type: typeof FETCH_RECIPES;
 }
@@ -111,7 +126,7 @@ export interface RootState {
 
 export type RecipeActionTypes =
   | PersistStoreAction
-  | ViewRecipeAction
+  | FetchRecipeAction
   | AddRecipe
   | AddRecipeSuccess
   | AddRecipeFail
@@ -120,4 +135,7 @@ export type RecipeActionTypes =
   | FetchRecipesFail
   | DeleteRecipe
   | DeleteRecipeSuccess
-  | DeleteRecipeFail;
+  | DeleteRecipeFail
+  | EditRecipeAction
+  | EditRecipeSuccessAction
+  | EditRecipeFailAction;

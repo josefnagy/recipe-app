@@ -2,17 +2,13 @@ import React, { useEffect } from 'react';
 import { useForm, useFieldArray } from 'react-hook-form';
 import { useAppSelector } from '../hooks';
 
-import { IngredientGroup, Recipe } from '../store/recipes/types';
-import IngredientGroupComp from './IngredientGroup';
-
-export interface FormValues {
-  allIngredients: IngredientGroup[];
-  battlePlan: [{ step: string }];
-}
+import { Recipe } from '../store/recipes/types';
+import IngredientGroup from './IngredientGroup';
 
 interface RecipeFormProps {
   defaultValues: any;
   onSubmit: any;
+  currentRecipe?: Recipe;
 }
 
 const RecipeForm: React.FC<RecipeFormProps> = ({ defaultValues, onSubmit }) => {
@@ -120,7 +116,7 @@ const RecipeForm: React.FC<RecipeFormProps> = ({ defaultValues, onSubmit }) => {
         <div className="mt-6 flex flex-col">
           <h2 className="text-2xl mb-2">Ingredience:</h2>
           <div className="flex flex-col">
-            <IngredientGroupComp
+            <IngredientGroup
               {...{ control, register, errors, defaultValues }}
             />
           </div>

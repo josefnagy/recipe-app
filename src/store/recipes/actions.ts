@@ -3,12 +3,6 @@ import { ThunkAction } from 'redux-thunk';
 import { Dispatch } from 'redux';
 import { v4 as uuid } from 'uuid';
 
-import {
-  DELETE_RECIPE,
-  DELETE_RECIPE_FAIL,
-  DELETE_RECIPE_SUCCESS,
-  RecipesState,
-} from './types';
 import history from '../../history';
 
 export type ThunkResult<R> = ThunkAction<
@@ -20,7 +14,7 @@ export type ThunkResult<R> = ThunkAction<
 
 import {
   Recipe,
-  VIEW_RECIPE,
+  FETCH_RECIPE,
   FETCH_RECIPES,
   FETCH_RECIPES_SUCCESS,
   FETCH_RECIPES_FAIL,
@@ -28,7 +22,55 @@ import {
   ADD_RECIPE_FAIL,
   ADD_RECIPE_SUCCESS,
   RecipeActionTypes,
+  DELETE_RECIPE,
+  DELETE_RECIPE_FAIL,
+  DELETE_RECIPE_SUCCESS,
+  EDIT_RECIPE,
+  EDIT_RECIPE_SUCCESS,
+  EDIT_RECIPE_FAIL,
+  RecipesState,
 } from './types';
+
+//  -----------          EDITING RECIPE ----------------------
+
+export const editRecipe = (editedRecipe: Recipe): ThunkResult<void> => async (
+  dispatch,
+) => {
+  editedRecipe.updatedAt = Date.now();
+  handleEditRecipe(dispatch);
+
+  await db
+    .collection('allRecipes')
+    .doc(editedRecipe.id)
+    .update(editedRecipe)
+    .then(() => {
+      console.log('RECIPE UPDATED ...');
+      handleEditRecipeSuccess(dispatch, editedRecipe);
+    })
+    .catch((error) => {
+      console.log('error editing recipe', error);
+      handleEditRecipeFail(dispatch, error);
+    });
+};
+
+const handleEditRecipe = (dispatch: Dispatch) => {
+  dispatch({ type: EDIT_RECIPE });
+};
+
+const handleEditRecipeSuccess = (
+  dispatch: Dispatch<RecipeActionTypes>,
+  response: Recipe,
+) => {
+  dispatch({ type: EDIT_RECIPE_SUCCESS, payload: response });
+  history.push('/');
+};
+
+const handleEditRecipeFail = (
+  dispatch: Dispatch<RecipeActionTypes>,
+  error: string,
+) => {
+  dispatch({ type: EDIT_RECIPE_FAIL, payload: error });
+};
 
 //  -----------          ADDING RECIPE ----------------------
 
@@ -156,7 +198,7 @@ const handleDeleteRecipeFail = (
 };
 
 export const viewRecipe = (recipeId: Recipe['id']): RecipeActionTypes => {
-  return { type: VIEW_RECIPE, payload: recipeId };
+  return { type: FETCH_RECIPE, payload: recipeId };
 };
 
 // initial recipes

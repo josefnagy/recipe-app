@@ -5,7 +5,7 @@ import {
   RecipeActionTypes,
   ADD_RECIPE,
   ADD_RECIPE_SUCCESS,
-  VIEW_RECIPE,
+  FETCH_RECIPE,
   FETCH_RECIPES,
   PERSIST,
   ADD_RECIPE_FAIL,
@@ -14,6 +14,8 @@ import {
   DELETE_RECIPE,
   DELETE_RECIPE_SUCCESS,
   DELETE_RECIPE_FAIL,
+  EDIT_RECIPE,
+  EDIT_RECIPE_SUCCESS,
 } from './types';
 
 const INITIAL_STATE: RecipesState = {
@@ -34,6 +36,7 @@ export const recipesReducer = (
         return {
           ...state,
           allRecipes: action.payload.recipes.allRecipes,
+          selectedRecipe: action.payload.recipes.selectedRecipe,
         };
       }
       return state;
@@ -41,9 +44,11 @@ export const recipesReducer = (
     case ADD_RECIPE:
     case FETCH_RECIPES:
     case DELETE_RECIPE:
-      return { ...state, loading: true, selectedRecipe: null };
+    case EDIT_RECIPE:
+      return { ...state, loading: true };
 
     case ADD_RECIPE_SUCCESS:
+    case EDIT_RECIPE_SUCCESS:
       const { id } = action.payload;
       return {
         ...state,
@@ -69,7 +74,7 @@ export const recipesReducer = (
       return {
         ...state,
         loading: false,
-        selectedRecipe: null,
+        // selectedRecipe: null,
         error: action.payload,
       };
 
@@ -80,7 +85,7 @@ export const recipesReducer = (
         allRecipes: _.mapKeys(action.payload, 'id'),
       };
 
-    case VIEW_RECIPE:
+    case FETCH_RECIPE:
       const recipesWithKeys = _.mapKeys(state.allRecipes, 'id');
       return {
         ...state,

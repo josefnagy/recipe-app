@@ -1,10 +1,41 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
+import _ from 'lodash';
+
+import { Recipe } from '../store/recipes/types';
+import { editRecipe } from '../store/recipes/actions';
+import RecipeForm from './RecipeForm';
+import { useAppSelector } from '../hooks';
 
 const RecipeEdit: React.FC = () => {
+  const dispatch = useDispatch();
+  const recipe = useAppSelector((state) => state.recipes.selectedRecipe);
+
+  const onSubmit = (data: Recipe) => {
+    if (recipe) {
+      data.id = recipe.id;
+      data.createdAt = recipe.createdAt;
+      dispatch(editRecipe(data));
+    }
+    console.log('ERROR, neni recipe ID ...');
+  };
+
   return (
-    <div className="flex-auto bg-tertiary p-20 flex flex-col ml-84">
-      Edit some recipe bro
-    </div>
+    <RecipeForm
+      defaultValues={_.pick(
+        recipe,
+        'allIngredients',
+        'battlePlan',
+        'description',
+        'difficulty',
+        'name',
+        'notes',
+        'portions',
+        'url',
+        'cookingTime',
+      )}
+      onSubmit={onSubmit}
+    />
   );
 };
 
