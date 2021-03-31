@@ -145,6 +145,7 @@ const handleDeleteRecipeSuccess = (
   response: string,
 ) => {
   dispatch({ type: DELETE_RECIPE_SUCCESS, payload: response });
+  history.push('/');
 };
 
 const handleDeleteRecipeFail = (
