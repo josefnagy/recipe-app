@@ -17,7 +17,6 @@ const RecipeEdit: React.FC = () => {
       data.createdAt = recipe.createdAt;
       dispatch(editRecipe(data));
     }
-    console.log('ERROR, neni recipe ID ...');
   };
 
   return (

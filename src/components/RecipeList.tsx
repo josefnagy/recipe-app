@@ -14,6 +14,13 @@ const RecipeList: React.FC = () => {
   const recipesArr = Object.values(recipes);
 
   useEffect(() => {
+    console.log('Mounting RECIPE LIST');
+    return () => {
+      console.log('unmounting RECIPE LIST');
+    };
+  }, []);
+
+  useEffect(() => {
     dispatch(fetchRecipes());
   }, [dispatch]);
 
