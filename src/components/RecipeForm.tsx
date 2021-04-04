@@ -37,7 +37,7 @@ const RecipeForm: React.FC<RecipeFormProps> = ({ defaultValues, onSubmit }) => {
       className="flex-auto bg-tertiary p-20 flex flex-col ml-84 h-screen overflow-y-auto"
     >
       <h1 className="text-4xl font-heading uppercase text-primary text-center mb-8">
-        Přidej nový recept
+        {defaultValues.name ? 'Upravit recept' : 'Přidej nový recept'}
       </h1>
       {loading ? (
         <div className="grid place-items-center h-full">
@@ -208,10 +208,12 @@ const RecipeForm: React.FC<RecipeFormProps> = ({ defaultValues, onSubmit }) => {
             ></textarea>
           </div>
 
-          <input
+          <button
             type="submit"
-            className="text-center mt-4 ml-8 w-40 border border-primary rounded py-1 px-2 hover:bg-primary hover:text-white self-center"
-          />
+            className="text-center mt-4 ml-8 w-40 border border-primary rounded py-1 px-2 hover:bg-primary hover:text-white self-center cursor-pointer"
+          >
+            Ulož recept
+          </button>
         </form>
       )}
     </div>

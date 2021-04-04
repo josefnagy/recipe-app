@@ -71,7 +71,11 @@ const RecipeDetail: React.FC<RecipeDetailProps> = ({ match }) => {
                     />
                   </svg>
                 </div>
-                <div className="ml-2">{recipe.difficulty}</div>
+                <div className="ml-2">
+                  {recipe.difficulty === 'easy' && 'Lehká'}
+                  {recipe.difficulty === 'moderate' && 'Střední'}
+                  {recipe.difficulty === 'hard' && 'Těžká'}
+                </div>
               </div>
               <div className="flex items-center">
                 <div>
