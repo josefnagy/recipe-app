@@ -20,14 +20,11 @@ const RecipeList: React.FC = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log('Mounting RECIPE LIST');
+    // console.log('Mounting RECIPE LIST');
     const unsubscribe = db.collection('allRecipes').onSnapshot((snap) => {
       if (snap && !loading) {
         const updatedAtArrDB = snap.docs.map((doc) => doc.data().updatedAt);
         const lastUpdatedDB = Math.max(...updatedAtArrDB);
-        console.log(loading);
-        console.log('LL', lastUpdatedLocal);
-        console.log('LD', lastUpdatedDB);
         if (
           snap.size !== allRecipes.length ||
           lastUpdatedLocal !== lastUpdatedDB
@@ -38,7 +35,7 @@ const RecipeList: React.FC = () => {
       }
     });
     return () => {
-      console.log('unmounting RECIPE LIST');
+      // console.log('unmounting RECIPE LIST');
       unsubscribe();
     };
   });

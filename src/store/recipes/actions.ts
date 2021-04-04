@@ -61,7 +61,6 @@ const handleEditRecipeSuccess = (
   dispatch: Dispatch<RecipeActionTypes>,
   response: Recipe,
 ) => {
-  console.log('dispatching success now ...');
   dispatch({ type: EDIT_RECIPE_SUCCESS, payload: response });
   history.push('/');
 };
