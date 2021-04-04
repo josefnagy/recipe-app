@@ -1,9 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import { Router, Route, Switch } from 'react-router-dom';
 import history from '../history';
-
-import { useAppSelector } from '../hooks';
 
 import Aside from './Aside';
 import AppInfo from './AppInfo';
@@ -15,16 +13,6 @@ import Recipe404 from './Recipe404';
 import Recipes from './Recipes';
 
 const App: React.FC = () => {
-  const lastUpdatedAt = useAppSelector((state) => {
-    const allRecipesArr = Object.values(state.recipes.allRecipes);
-    const updatedAtArr = allRecipesArr.map((recipe) => recipe.updatedAt);
-    return Math.max(...updatedAtArr);
-  });
-
-  useEffect(() => {
-    console.log(lastUpdatedAt);
-  }, [lastUpdatedAt]);
-
   return (
     <div className="flex h-screen font-heading">
       <Router history={history}>

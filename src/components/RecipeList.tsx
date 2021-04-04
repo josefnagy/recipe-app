@@ -1,30 +1,49 @@
 import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { AppState } from '../store';
-import { Recipe, Recipes } from '../store/recipes/types';
+import db from '../api/firebase';
+
+import { Recipe } from '../store/recipes/types';
 import { fetchRecipes } from '../store/recipes/actions';
+import { useAppSelector } from '../hooks';
 
 const RecipeList: React.FC = () => {
-  const dispatch = useDispatch();
-  const recipes: Recipes = useSelector(
-    (state: AppState) => state.recipes.allRecipes,
+  const allRecipes = useAppSelector((state) =>
+    Object.values(state.recipes.allRecipes),
   );
-  const recipesArr = Object.values(recipes);
+  const lastUpdatedLocal = Math.max(
+    ...allRecipes.map((recipe) => recipe.updatedAt),
+  );
+  const loading = useAppSelector((state) => state.recipes.loading);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     console.log('Mounting RECIPE LIST');
+    const unsubscribe = db.collection('allRecipes').onSnapshot((snap) => {
+      if (snap && !loading) {
+        const updatedAtArrDB = snap.docs.map((doc) => doc.data().updatedAt);
+        const lastUpdatedDB = Math.max(...updatedAtArrDB);
+        console.log(loading);
+        console.log('LL', lastUpdatedLocal);
+        console.log('LD', lastUpdatedDB);
+        if (
+          snap.size !== allRecipes.length ||
+          lastUpdatedLocal !== lastUpdatedDB
+        ) {
+          console.log('FETCHING RECIPE DATA ...');
+          dispatch(fetchRecipes());
+        }
+      }
+    });
     return () => {
       console.log('unmounting RECIPE LIST');
+      unsubscribe();
     };
-  }, []);
+  });
 
-  useEffect(() => {
-    dispatch(fetchRecipes());
-  }, [dispatch]);
-
-  const renderRecipes = recipesArr.map((recipe: Recipe, index) => (
+  const renderRecipes = allRecipes.map((recipe: Recipe, index) => (
     <Link
       className="py-1 px-3 block hover:bg-tertiary cursor-pointer hover:text-secondary"
       key={index}
