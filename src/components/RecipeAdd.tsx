@@ -19,6 +19,7 @@ const RecipeAdd: React.FC = () => {
   const dispatch = useDispatch();
 
   const onSubmit = (data: Recipe) => {
+    console.log(data);
     dispatch(addRecipe(data));
   };
 

@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm, useFieldArray } from 'react-hook-form';
 import { useAppSelector } from '../hooks';
 
 import { Recipe } from '../store/recipes/types';
+import Tags from './Tags/Tags';
 import IngredientGroup from './IngredientGroup';
 
 interface RecipeFormProps {
@@ -11,7 +12,14 @@ interface RecipeFormProps {
   onSubmit: (recipe: Recipe) => void;
 }
 
+const initialTags: string[] = [];
+
 const RecipeForm: React.FC<RecipeFormProps> = ({ defaultValues, onSubmit }) => {
+  // const defaultTags
+  const [tags, setTags] = useState(
+    defaultValues.tags ? defaultValues.tags : initialTags,
+  );
+
   const loading = useAppSelector((state) => state.recipes.loading);
   const error = useAppSelector((state) => state.recipes.error);
 
@@ -20,6 +28,14 @@ const RecipeForm: React.FC<RecipeFormProps> = ({ defaultValues, onSubmit }) => {
       // handle Firebase Error some way ...
     }
   }, [error]);
+
+  const addTag = (tag: string) => {
+    setTags((tags: string[]) => [...tags, tag]);
+  };
+
+  const removeTag = (tag: string) => {
+    setTags(tags.filter((item: string) => item !== tag));
+  };
 
   const { control, register, handleSubmit, errors } = useForm<Recipe>({
     defaultValues,
@@ -30,6 +46,12 @@ const RecipeForm: React.FC<RecipeFormProps> = ({ defaultValues, onSubmit }) => {
     control,
     name: 'battlePlan',
   });
+
+  const onEnhancedSubmit = (data: Recipe) => {
+    if (tags.length > 0) data.tags = tags;
+
+    onSubmit(data);
+  };
 
   return (
     <div
@@ -60,7 +82,10 @@ const RecipeForm: React.FC<RecipeFormProps> = ({ defaultValues, onSubmit }) => {
           </svg>
         </div>
       ) : (
-        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
+        <form
+          onSubmit={handleSubmit(onEnhancedSubmit)}
+          className="flex flex-col"
+        >
           <div className="mb-4 flex relative">
             <label
               htmlFor="name"
@@ -106,7 +131,7 @@ const RecipeForm: React.FC<RecipeFormProps> = ({ defaultValues, onSubmit }) => {
               placeholder="Počet porcí"
             />
           </div>
-
+          <Tags tags={tags} addTag={addTag} removeTag={removeTag} />
           <label htmlFor="description" className="text-indigo-900 font-light">
             {errors.description &&
               'Recept musí mít nějaký popis a mít mezi 5 a 400 znaky'}
@@ -149,7 +174,7 @@ const RecipeForm: React.FC<RecipeFormProps> = ({ defaultValues, onSubmit }) => {
                   >
                     {errors.battlePlan
                       ? errors.battlePlan[index] &&
-                        'Recept musí mít nějaký popis a mít mezi 5 a 400 znaky'
+                        'Recept musí mít nějaký postup a mít mezi 5 a 400 znaky'
                       : ''}
                   </label>
                   <div className="flex w-full">

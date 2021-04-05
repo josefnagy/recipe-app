@@ -31,6 +31,7 @@ const RecipeEdit: React.FC = () => {
         'notes',
         'portions',
         'url',
+        'tags',
         'cookingTime',
       )}
       onSubmit={onSubmit}
