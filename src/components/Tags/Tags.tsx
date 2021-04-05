@@ -1,5 +1,6 @@
 import React, { FormEvent, KeyboardEvent, useState } from 'react';
 
+import { useAppSelector } from '../../hooks';
 import Tag from './Tag';
 
 interface TagsProps {
@@ -10,11 +11,17 @@ interface TagsProps {
 
 const Tags: React.FC<TagsProps> = ({ tags, addTag, removeTag }) => {
   const [tag, setTag] = useState('');
+  // const allTags =
+
   const handleTagSubmit = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.code === 'Enter') {
       e.preventDefault();
-      addTag(tag);
-      setTag('');
+      if (tags.includes(tag)) {
+        console.log('error animation');
+      } else {
+        addTag(tag);
+        setTag('');
+      }
     }
   };
 
