@@ -1,12 +1,14 @@
-import _ from 'lodash';
+import { chain, omit, mapKeys, values, concat, includes } from 'lodash';
 
 import {
   RecipesState,
+  Recipe,
   RecipeActionTypes,
   ADD_RECIPE,
   ADD_RECIPE_SUCCESS,
   FETCH_RECIPE,
   FETCH_RECIPES,
+  FILTER_RECIPES,
   PERSIST,
   ADD_RECIPE_FAIL,
   FETCH_RECIPES_SUCCESS,
@@ -41,6 +43,41 @@ export const recipesReducer = (
       }
       return state;
 
+    case FILTER_RECIPES:
+      const { filteredText, name, ingredients, tags } = action.payload;
+
+      const filteredRecipesByName = name
+        ? values(state.allRecipes).filter((recipe) => {
+            return recipe.name
+              .toLocaleLowerCase()
+              .includes(filteredText.toLocaleLowerCase());
+          })
+        : [];
+
+      const filteredRecipesByIngredients = values(state.allRecipes)
+        .flatMap((recipe) => recipe.allIngredients)
+        .flatMap((ingredients) => ingredients.name)
+        .filter((ing) =>
+          ing.toLocaleLowerCase().includes(filteredText.toLocaleLowerCase()),
+        );
+
+      // const filteredRecipesByIngredients = ingredients
+      //   ? values(state.allRecipes).filter((recipe) => {
+      //       return (
+      //         recipe.allIngredients
+      //           .values()
+      //           .toLocaleLowerCase()
+      //           .includes(filteredText.toLocaleLowerCase())
+      //       );
+      //     })
+      //   : [];
+
+      console.log(filteredRecipesByName);
+      console.log(filteredRecipesByIngredients);
+      console.log(action.payload);
+
+      return state;
+
     case ADD_RECIPE:
     case FETCH_RECIPES:
     case DELETE_RECIPE:
@@ -63,7 +100,7 @@ export const recipesReducer = (
     case DELETE_RECIPE_SUCCESS:
       return {
         ...state,
-        allRecipes: { ..._.omit(state.allRecipes, action.payload) },
+        allRecipes: { ...omit(state.allRecipes, action.payload) },
         loading: false,
         selectedRecipe: null,
       };
@@ -82,11 +119,11 @@ export const recipesReducer = (
       return {
         ...state,
         loading: false,
-        allRecipes: _.mapKeys(action.payload, 'id'),
+        allRecipes: mapKeys(action.payload, 'id'),
       };
 
     case FETCH_RECIPE:
-      const recipesWithKeys = _.mapKeys(state.allRecipes, 'id');
+      const recipesWithKeys = mapKeys(state.allRecipes, 'id');
       return {
         ...state,
         selectedRecipe: recipesWithKeys[action.payload],

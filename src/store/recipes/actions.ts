@@ -18,6 +18,8 @@ import {
   FETCH_RECIPES,
   FETCH_RECIPES_SUCCESS,
   FETCH_RECIPES_FAIL,
+  FILTER_RECIPES,
+  FilteredRecipeData,
   ADD_RECIPE,
   ADD_RECIPE_FAIL,
   ADD_RECIPE_SUCCESS,
@@ -30,6 +32,12 @@ import {
   EDIT_RECIPE_FAIL,
   RecipesState,
 } from './types';
+
+//  -----------          FILTERING RECIPE ----------------------
+
+export const filterRecipes = (fR: FilteredRecipeData): RecipeActionTypes => {
+  return { type: FILTER_RECIPES, payload: fR };
+};
 
 //  -----------          EDITING RECIPE ----------------------
 

@@ -13,11 +13,24 @@ export const DELETE_RECIPE_FAIL = 'DELETE_RECIPE_FAIL';
 export const EDIT_RECIPE = 'EDIT_RECIPE';
 export const EDIT_RECIPE_SUCCESS = 'EDIT_RECIPE_SUCCESS';
 export const EDIT_RECIPE_FAIL = 'EDIT_RECIPE_FAIL';
+export const FILTER_RECIPES = 'FILTER_RECIPES';
 
 interface PersistStoreAction {
   type: typeof PERSIST;
   // payload: Record<string, unknown>;
   payload: RootState;
+}
+
+export interface FilteredRecipeData {
+  filteredText: string;
+  name: boolean;
+  ingredients: boolean;
+  tags: boolean;
+}
+
+interface FilterRecipesAction {
+  type: typeof FILTER_RECIPES;
+  payload: FilteredRecipeData;
 }
 
 interface EditRecipeAction {
@@ -126,6 +139,7 @@ export interface RootState {
 
 export type RecipeActionTypes =
   | PersistStoreAction
+  | FilterRecipesAction
   | FetchRecipeAction
   | AddRecipe
   | AddRecipeSuccess
