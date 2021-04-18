@@ -3,12 +3,7 @@ import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 
 import { WarningSVG } from '../../svg';
-
-interface SignupInfo {
-  userName: string;
-  password: string;
-  passwordAgain: string;
-}
+import { SignupInfo } from '../../store/auth/types';
 
 interface SignupFormProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
