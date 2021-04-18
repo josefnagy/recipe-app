@@ -12,20 +12,11 @@ const RecipeFilter: React.FC = () => {
 
   const dispatch = useDispatch();
 
-  // const allTags = useAppSelector((state) => {
-  //   const allRecipes = Object.values(state.recipes.allRecipes);
-  //   const allRecipesWithTags = allRecipes.filter(
-  //     (recipe) => typeof recipe.tags !== 'undefined',
-  //   );
-  //   return allRecipesWithTags.map((recipe) => recipe.tags).flat();
-  // });
-
   useEffect(() => {
-    if (searchText.length > 0)
-      dispatch(
-        filterRecipes({ filteredText: searchText, name, ingredients, tags }),
-      );
-  }, [searchText]);
+    dispatch(
+      filterRecipes({ filteredText: searchText, name, ingredients, tags }),
+    );
+  }, [searchText, name, ingredients, tags]);
 
   return (
     <div>

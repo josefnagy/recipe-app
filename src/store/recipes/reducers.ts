@@ -1,4 +1,5 @@
-import { chain, omit, mapKeys, values, concat, includes } from 'lodash';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { chain, omit, mapKeys, values, concat, uniq } from 'lodash';
 
 import {
   RecipesState,
@@ -23,6 +24,7 @@ import {
 const INITIAL_STATE: RecipesState = {
   allRecipes: {},
   selectedRecipe: null,
+  filteredRecipes: null,
   loading: false,
   error: null,
 };
@@ -38,6 +40,7 @@ export const recipesReducer = (
         return {
           ...state,
           allRecipes: action.payload.recipes.allRecipes,
+          filteredRecipes: action.payload.recipes.filteredRecipes,
           selectedRecipe: action.payload.recipes.selectedRecipe,
         };
       }
@@ -54,29 +57,45 @@ export const recipesReducer = (
           })
         : [];
 
-      const filteredRecipesByIngredients = values(state.allRecipes)
-        .flatMap((recipe) => recipe.allIngredients)
-        .flatMap((ingredients) => ingredients.name)
-        .filter((ing) =>
-          ing.toLocaleLowerCase().includes(filteredText.toLocaleLowerCase()),
-        );
+      const filteredRecipesByTags = tags
+        ? values(state.allRecipes).filter(
+            (recipe) =>
+              typeof recipe.tags !== 'undefined' &&
+              recipe.tags.some((tag) =>
+                tag
+                  .toLocaleLowerCase()
+                  .includes(filteredText.toLocaleLowerCase()),
+              ),
+          )
+        : [];
 
-      // const filteredRecipesByIngredients = ingredients
-      //   ? values(state.allRecipes).filter((recipe) => {
-      //       return (
-      //         recipe.allIngredients
-      //           .values()
-      //           .toLocaleLowerCase()
-      //           .includes(filteredText.toLocaleLowerCase())
-      //       );
-      //     })
-      //   : [];
+      const filteredRecipesByIngredients = ingredients
+        ? values(state.allRecipes).filter((recipe) =>
+            recipe.allIngredients.some((ingGroup) =>
+              ingGroup.ingredients.some((ingredient) =>
+                ingredient.name
+                  .toLocaleLowerCase()
+                  .includes(filteredText.toLocaleLowerCase()),
+              ),
+            ),
+          )
+        : [];
 
-      console.log(filteredRecipesByName);
-      console.log(filteredRecipesByIngredients);
-      console.log(action.payload);
+      const filteredRecipes = mapKeys(
+        uniq(
+          concat(
+            filteredRecipesByName,
+            filteredRecipesByTags,
+            filteredRecipesByIngredients,
+          ),
+        ),
+        'id',
+      );
 
-      return state;
+      return {
+        ...state,
+        filteredRecipes: filteredText.length > 0 ? filteredRecipes : null,
+      };
 
     case ADD_RECIPE:
     case FETCH_RECIPES:

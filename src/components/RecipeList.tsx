@@ -12,6 +12,17 @@ const RecipeList: React.FC = () => {
   const allRecipes = useAppSelector((state) =>
     Object.values(state.recipes.allRecipes),
   );
+
+  const filteredRecipes = useAppSelector(
+    (state) =>
+      state.recipes.filteredRecipes &&
+      Object.values(state.recipes.filteredRecipes),
+  );
+
+  const renderedRecipesList = filteredRecipes ? filteredRecipes : allRecipes;
+
+  // console.log(filteredRecipes);
+
   const lastUpdatedLocal = Math.max(
     ...allRecipes.map((recipe) => recipe.updatedAt),
   );
@@ -40,7 +51,7 @@ const RecipeList: React.FC = () => {
     };
   });
 
-  const renderRecipes = allRecipes.map((recipe: Recipe, index) => (
+  const renderRecipes = renderedRecipesList.map((recipe: Recipe, index) => (
     <Link
       className="py-1 px-3 block hover:bg-tertiary cursor-pointer hover:text-secondary"
       key={index}

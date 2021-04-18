@@ -129,6 +129,7 @@ export interface Ingredient {
 
 export interface RecipesState {
   allRecipes: Recipes;
+  filteredRecipes: Recipes | null;
   selectedRecipe: Recipe | null;
   loading: boolean;
   error: string | null;
