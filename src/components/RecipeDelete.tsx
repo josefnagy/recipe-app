@@ -51,8 +51,10 @@ const RecipeDelete: React.FC<RecipeDeleteProps> = ({ match }) => {
     <div className="flex-auto bg-tertiary p-20 flex flex-col ml-84">
       <Modal
         title="Delete Recipe"
+        open={true}
         content={renderContent()}
         actions={renderActions()}
+        className="absolute top-1/3 left-1/2 border border-primary rounded-md"
         onDismiss={() => history.push('/')}
       />
     </div>

@@ -11,6 +11,8 @@ import RecipeDelete from './RecipeDelete';
 import RecipeDetail from './RecipeDetail';
 import Recipe404 from './Recipe404';
 import Recipes from './Recipes';
+import Signup from './Auth/Signup';
+import Login from './Auth/Login';
 
 const App: React.FC = () => {
   return (
@@ -20,6 +22,8 @@ const App: React.FC = () => {
         <Recipes />
         <Switch>
           <Route path="/" exact component={AppInfo} />
+          <Route path="/auth/signup" exact component={Signup} />
+          <Route path="/auth/login" exact component={Login} />
           <Route path="/recipe/add" exact component={RecipeAdd} />
           <Route path="/recipe/edit/:id" exact component={RecipeEdit} />
           <Route path="/recipe/delete/:id" exact component={RecipeDelete} />

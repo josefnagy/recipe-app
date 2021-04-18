@@ -29,13 +29,13 @@ const RecipeFilter: React.FC = () => {
 
   const renderOptions = () => (
     <div
-      className="flex justify-between px-2 bg-white font-light text-secondary "
+      className="flex justify-between px-2 py-1 bg-white font-light text-secondary"
       ref={optionsRef}
     >
-      <label htmlFor="recipe-names">
+      <label htmlFor="recipe-names" className="flex items-center">
         <input
           ref={inputRef}
-          className="mr-1"
+          className="mr-1 border border-primary w-4 h-4 rounded"
           type="checkbox"
           name="recipeNames"
           id="recipe-names"
@@ -44,9 +44,9 @@ const RecipeFilter: React.FC = () => {
         />
         Názvy
       </label>
-      <label htmlFor="ingredients">
+      <label htmlFor="ingredients" className="flex items-center">
         <input
-          className="mr-1"
+          className="mr-1 border border-primary w-4 h-4 rounded"
           type="checkbox"
           name="ingredients"
           id="ingredients"
@@ -55,9 +55,9 @@ const RecipeFilter: React.FC = () => {
         />
         Ingredience
       </label>
-      <label htmlFor="tags">
+      <label htmlFor="tags" className="flex items-center">
         <input
-          className="mr-1"
+          className="mr-1 border border-primary w-4 h-4 rounded"
           type="checkbox"
           name="tags"
           id="tags"
@@ -72,7 +72,7 @@ const RecipeFilter: React.FC = () => {
   return (
     <div ref={filterRef}>
       <input
-        className="h-7 w-full mr-2 pl-2 text-secondary focus:outline-none focus:ring-2 focus:ring-primary font-light border-b border-secondary"
+        className="h-10 w-full mr-2 pl-2 text-secondary focus:outline-none focus:shadow-md focus:ring-primary font-light border-b border-tertiary"
         name="filter"
         type="text"
         value={searchText}
