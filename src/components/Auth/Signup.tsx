@@ -2,6 +2,8 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 
+import { WarningSVG } from '../../svg';
+
 interface SignupInfo {
   userName: string;
   password: string;
@@ -19,15 +21,22 @@ const Signup: React.FC<SignupFormProps> = () => {
 
   const onSubmit = (signupInfo: SignupInfo) => console.log(signupInfo);
 
+  const renderError = (errorMessage: string) => (
+    <p className="font-light text-red-700 text-xs flex items-center mr-4">
+      <WarningSVG />
+      {errorMessage}
+    </p>
+  );
+
   return (
     <div className="flex-auto bg-tertiary p-20 flex flex-col ml-84">
       <>
         <div className="grid place-items-center h-full">
           <form
             onSubmit={handleSubmit(onSubmit)}
-            className="relative flex flex-col w-1/2 p-10 border border-primary rounded-md"
+            className="relative flex flex-col w-1/2 max-w-md p-10 border border-primary rounded-md"
           >
-            <h3 className="absolute text-xl -top-4 left-10 bg-tertiary text-primary font-heading">
+            <h3 className="absolute text-xl -top-4 left-8 bg-tertiary text-primary font-heading px-2">
               Vytvořit účet
             </h3>
             <input
@@ -47,54 +56,24 @@ const Signup: React.FC<SignupFormProps> = () => {
                 },
               })}
             />
-            {errors.username && (
-              <p className="font-light text-red-700 text-xs flex items-center">
-                <svg
-                  className="h-4 w-4 ml-4 mr-2 mt-1 mb-2"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="red"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-                  />
-                </svg>
-                {errors.username.message}
-              </p>
-            )}
+            {errors.username && renderError(errors.username.message)}
             <input
               type="password"
               name="password"
               placeholder="Heslo"
               className="rounded-md my-1 py-1 px-2 focus:outline-none focus:ring-2 focus:ring-primary font-light shadow-sm"
               ref={register({
-                pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/i,
+                pattern: {
+                  value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
+                  message:
+                    'Heslo musí mít alspoň 8 znaků, jedno malé a velké písmeno, a jednu číslici.',
+                },
                 required:
-                  'Heslo musí mít alspoň 8 znaků, jedno malé a velké písmeno, a jednu číslici',
+                  'Heslo musí mít alspoň 8 znaků, jedno malé a velké písmeno, a jednu číslici.',
               })}
             />
-            {/* TODO: error u toho hesla to nezobrazuje dobre, chce to fixnout */}
-            {errors.password && (
-              <p className="font-light text-red-700 text-xs flex items-center">
-                <svg
-                  className="h-5 w-5 ml-4 mr-2 mt-1 mb-2"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="red"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-                  />
-                </svg>
-                q{errors.password.message}
-              </p>
-            )}
+
+            {errors.password && renderError(errors.password.message)}
             <input
               type="password"
               name="passwordAgain"
@@ -107,24 +86,8 @@ const Signup: React.FC<SignupFormProps> = () => {
                 },
               })}
             />
-            {errors.passwordAgain && (
-              <p className="font-light text-red-700 text-xs flex items-center">
-                <svg
-                  className="h-4 w-4 ml-4 mr-2 mt-1 mb-2"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="red"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-                  />
-                </svg>
-                {errors.passwordAgain.message}
-              </p>
-            )}
+            {errors.passwordAgain && renderError(errors.passwordAgain.message)}
+
             <div className="mt-4 flex justify-around">
               <Link
                 to="/"
