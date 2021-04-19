@@ -1,16 +1,22 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
 import { WarningSVG } from '../../svg';
 import { SignupCreditials } from '../../store/auth/types';
+import { useAppSelector } from '../../hooks';
 
-import { signup } from '../../store/auth/actions';
+import { signup, cleanError } from '../../store/auth/actions';
 
 const Signup: React.FC = () => {
   const { register, handleSubmit, getValues, errors } = useForm();
   const dispatch = useDispatch();
+  const errorMsg = useAppSelector((state) => state.auth.error);
+
+  useEffect(() => {
+    dispatch(cleanError());
+  }, []);
 
   const onSubmit = (signupCreditials: SignupCreditials) => {
     dispatch(signup(signupCreditials));
@@ -34,6 +40,11 @@ const Signup: React.FC = () => {
             <h3 className="absolute text-xl -top-4 left-8 bg-tertiary text-primary font-heading px-2">
               Vytvořit účet
             </h3>
+            {errorMsg && (
+              <p className="flex justify-center items-center mb-2 font-light bg-red-500">
+                {<WarningSVG />} {errorMsg}
+              </p>
+            )}
             <input
               type="email"
               name="email"

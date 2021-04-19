@@ -20,6 +20,7 @@ import {
   LOGOUT,
   LOGOUT_SUCCESS,
   LOGOUT_FAIL,
+  CLEAN_ERROR,
 } from './types';
 
 export type ThunkResult<R> = ThunkAction<
@@ -28,6 +29,10 @@ export type ThunkResult<R> = ThunkAction<
   undefined,
   AuthActionTypes
 >;
+
+export const cleanError = (): AuthActionTypes => {
+  return { type: CLEAN_ERROR };
+};
 
 /**--------------------  SIGNUP ---------------------------- */
 

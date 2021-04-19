@@ -9,6 +9,7 @@ export const LOGIN_FAIL = 'LOGIN_FAIL';
 export const LOGOUT = 'LOGOUT';
 export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
 export const LOGOUT_FAIL = 'LOGOUT_FAIL';
+export const CLEAN_ERROR = 'CLEAN_ERROR';
 
 export interface SignupCreditials {
   email: string;
@@ -19,6 +20,10 @@ export interface SignupCreditials {
 export interface LoginCredentials {
   email: string;
   password: string;
+}
+
+interface CleanErrorAction {
+  type: typeof CLEAN_ERROR;
 }
 
 interface LoginAction {
@@ -80,4 +85,5 @@ export type AuthActionTypes =
   | LoginFailAction
   | LogoutAction
   | LogoutSuccessAction
-  | LogoutFailAction;
+  | LogoutFailAction
+  | CleanErrorAction;

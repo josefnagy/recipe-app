@@ -10,6 +10,7 @@ import {
   LOGOUT,
   LOGOUT_SUCCESS,
   LOGOUT_FAIL,
+  CLEAN_ERROR,
 } from './types';
 
 const INITIAL_STATE: AuthState = {
@@ -42,6 +43,9 @@ export const authReducer = (
     case LOGOUT_FAIL:
       console.log(action.payload);
       return { ...state, loading: false, error: action.payload };
+
+    case CLEAN_ERROR:
+      return { ...state, error: null };
 
     default:
       return state;
