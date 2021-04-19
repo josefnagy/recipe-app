@@ -16,7 +16,7 @@ export interface SignupCreditials {
   passwordAgain: string;
 }
 
-export interface LoginInfo {
+export interface LoginCredentials {
   email: string;
   password: string;
 }
@@ -27,6 +27,7 @@ interface LoginAction {
 
 interface LoginSuccessAction {
   type: typeof LOGIN_SUCCESS;
+  payload: firebase.User;
 }
 
 interface LoginFailAction {

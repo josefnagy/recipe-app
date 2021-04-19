@@ -24,12 +24,22 @@ export const authReducer = (
 ): AuthState => {
   switch (action.type) {
     case SIGNUP:
+    case LOGIN:
+    case LOGOUT:
       return { ...state, loading: true };
 
     case SIGNUP_SUCCESS:
-      return { ...state, loading: false, user: action.payload.user?.uid };
+      return { ...state, loading: false };
+
+    case LOGIN_SUCCESS:
+      return { ...state, loading: false, user: action.payload.uid };
+
+    case LOGOUT_SUCCESS:
+      return { ...state, loading: false, user: undefined };
 
     case SIGNUP_FAIL:
+    case LOGIN_FAIL:
+    case LOGOUT_FAIL:
       console.log(action.payload);
       return { ...state, loading: false, error: action.payload };
 

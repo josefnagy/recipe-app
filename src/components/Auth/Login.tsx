@@ -1,14 +1,19 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
 import { WarningSVG } from '../../svg';
-import { LoginInfo } from '../../store/auth/types';
+import { LoginCredentials } from '../../store/auth/types';
+import { login } from '../../store/auth/actions';
 
 const Login: React.FC = () => {
   const { register, handleSubmit, errors } = useForm();
+  const dispatch = useDispatch();
 
-  const onSubmit = (loginInfo: LoginInfo) => console.log(loginInfo);
+  const onSubmit = (loginCredentials: LoginCredentials) => {
+    dispatch(login(loginCredentials));
+  };
 
   const renderError = (errorMessage: string) => (
     <p className="font-light text-red-700 text-xs flex items-center mr-4">
@@ -29,19 +34,19 @@ const Login: React.FC = () => {
               Přihlásit se
             </h3>
             <input
-              type="text"
-              name="username"
-              placeholder="Uživatelské jméno"
+              type="email"
+              name="email"
+              placeholder="Email"
               className="rounded-md my-1 py-1 px-2 focus:outline-none focus:ring-2 focus:ring-primary font-light shadow-sm"
               ref={register({
-                required: 'Musíš mít nějaké uživatelské jméno',
+                required: 'Musíš mít nějaké email',
                 minLength: {
-                  value: 3,
-                  message: 'Uživatelské jméno musí být alspoň 3 znaky dlouhé',
+                  value: 5,
+                  message: 'Email musí být alspoň 5 znaků dlouhý',
                 },
                 maxLength: {
-                  value: 15,
-                  message: 'Uživatelské jméno může mít maximálně 15 znaků',
+                  value: 25,
+                  message: 'Email může mít maximálně 25 znaků',
                 },
               })}
             />
