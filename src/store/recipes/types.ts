@@ -1,3 +1,5 @@
+import { AuthState } from '../auth/types';
+
 export const PERSIST = 'persist/REHYDRATE';
 
 export const FETCH_RECIPES = 'FETCH_RECIPES';
@@ -136,6 +138,7 @@ export interface RecipesState {
 }
 export interface RootState {
   readonly recipes: RecipesState;
+  readonly auth: AuthState;
 }
 
 export type RecipeActionTypes =

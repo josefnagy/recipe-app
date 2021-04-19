@@ -5,7 +5,7 @@ import { useAppSelector } from '../hooks';
 import { Recipe } from '../store/recipes/types';
 import Tags from './Tags/Tags';
 import IngredientGroup from './IngredientGroup';
-import { RemoveSVG, WarningSVG, LoadingSVG } from '../svg';
+import { RemoveSVG, LoadingSVG } from '../svg';
 
 interface RecipeFormProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

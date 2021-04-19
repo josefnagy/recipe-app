@@ -3,11 +3,7 @@ import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 
 import { WarningSVG } from '../../svg';
-
-interface LoginInfo {
-  username: string;
-  password: string;
-}
+import { LoginInfo } from '../../store/auth/types';
 
 const Login: React.FC = () => {
   const { register, handleSubmit, errors } = useForm();

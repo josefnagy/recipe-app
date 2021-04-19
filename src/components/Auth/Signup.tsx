@@ -1,20 +1,20 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
 import { WarningSVG } from '../../svg';
-import { SignupInfo } from '../../store/auth/types';
+import { SignupCreditials } from '../../store/auth/types';
 
-interface SignupFormProps {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  defaultValues: any;
-  onSubmit: (signupInfo: SignupInfo) => void;
-}
+import { signup } from '../../store/auth/actions';
 
-const Signup: React.FC<SignupFormProps> = () => {
+const Signup: React.FC = () => {
   const { register, handleSubmit, getValues, errors } = useForm();
+  const dispatch = useDispatch();
 
-  const onSubmit = (signupInfo: SignupInfo) => console.log(signupInfo);
+  const onSubmit = (signupCreditials: SignupCreditials) => {
+    dispatch(signup(signupCreditials));
+  };
 
   const renderError = (errorMessage: string) => (
     <p className="font-light text-red-700 text-xs flex items-center mr-4">
@@ -35,23 +35,23 @@ const Signup: React.FC<SignupFormProps> = () => {
               Vytvořit účet
             </h3>
             <input
-              type="text"
-              name="username"
-              placeholder="Uživatelské jméno"
+              type="email"
+              name="email"
+              placeholder="Email"
               className="rounded-md my-1 py-1 px-2 focus:outline-none focus:ring-2 focus:ring-primary font-light shadow-sm"
               ref={register({
-                required: 'Musíš mít nějaké uživatelské jméno',
+                required: 'Musíš mít nějaký email',
                 minLength: {
                   value: 3,
-                  message: 'Uživatelské jméno musí být alspoň 3 znaky dlouhé',
+                  message: 'Email musí být alspoň 3 znaky dlouhý',
                 },
                 maxLength: {
-                  value: 15,
-                  message: 'Uživatelské jméno může mít maximálně 15 znaků',
+                  value: 25,
+                  message: 'Email může mít maximálně 15 znaků',
                 },
               })}
             />
-            {errors.username && renderError(errors.username.message)}
+            {errors.email && renderError(errors.email.message)}
             <input
               type="password"
               name="password"
