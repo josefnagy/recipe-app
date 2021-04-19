@@ -9,6 +9,36 @@ type UseFieldArrayOptions = {
   nestIndex: number;
 };
 
+const amountOptions = [
+  'jednotka',
+  'ks',
+  'g',
+  'kg',
+  'ml',
+  'dl',
+  'l',
+  'balení',
+  'balíček',
+  'hrnek',
+  'hrst',
+  'kelímek',
+  'kostka',
+  'láhev',
+  'lžička',
+  'lžíce',
+  'miska',
+  'plátek',
+  'plechovka',
+  'sklenice',
+  'snítka',
+  'stroužek',
+  'svazek',
+  'šálek',
+  'špetka',
+  'krajíc',
+  'stonek',
+];
+
 const Ingredient: React.FC<UseFieldArrayOptions> = ({
   nestIndex,
   control,
@@ -61,9 +91,14 @@ const Ingredient: React.FC<UseFieldArrayOptions> = ({
                 defaultValue={ingredient.unit}
                 className="rounded-md h-7 px-2 focus:outline-none focus:ring-2 focus:ring-primary font-light mr-2"
               >
-                <option value="g">g</option>
+                {amountOptions.map((option, index) => (
+                  <option value={option} key={index}>
+                    {option}
+                  </option>
+                ))}
+                {/* <option value="g">g</option>
                 <option value="kg">kg</option>
-                <option value="ml">ml</option>
+                <option value="ml">ml</option> */}
               </select>
               <input
                 className="rounded-md h-7 px-2 focus:outline-none focus:ring-2 focus:ring-primary font-light mr-2"

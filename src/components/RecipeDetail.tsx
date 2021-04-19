@@ -144,7 +144,7 @@ const RecipeDetail: React.FC<RecipeDetailProps> = ({ match }) => {
                   {ingGroup.ingredients.map((ingredient, index) => (
                     <li key={index}>
                       • <span className="mr-2">{ingredient.amount}</span>
-                      <span className="mr-2">{ingredient.unit}</span>
+                      <span className="mr-2 italic">{ingredient.unit}</span>
                       <span className="mr-2">{ingredient.name}</span>
                       {ingredient.note ? <span>({ingredient.note})</span> : ''}
                     </li>
@@ -154,13 +154,13 @@ const RecipeDetail: React.FC<RecipeDetailProps> = ({ match }) => {
             ))}
           </div>
           <h3 className="text-xl mt-4 mb-4">Postup:</h3>
-          <div className="font-light">
+          <div className="font-light pl-14 pr-20 text-justify">
             {recipe.battlePlan.map((step, index) => (
-              <div key={index}>
+              <div key={index} className="mb-6 flex">
                 <span className="inline-block text-center w-7 h-7 rounded-full border-solid border-2 border-primary mr-2">
                   {index + 1}.{' '}
                 </span>
-                {step.step}
+                <div className="flex-1">{step.step}</div>
               </div>
             ))}
           </div>
