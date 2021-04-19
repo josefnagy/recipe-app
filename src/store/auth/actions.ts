@@ -1,4 +1,4 @@
-import db, { auth } from '../../api/firebase';
+import { auth } from '../../api/firebase';
 import { ThunkAction } from 'redux-thunk';
 import { Dispatch } from 'redux';
 import firebase from 'firebase';
